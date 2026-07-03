@@ -71,6 +71,8 @@
 
     // testimonials — auto-advancing slider (content stays admin-editable)
     const quotes = (c.testimonials || []);
+    const testiSec = document.querySelector("#testimonials");
+    if (testiSec) testiSec.style.display = quotes.length ? "" : "none"; // hide when empty
     $("#quotesGrid").innerHTML = `
       <div class="q-slider" id="qSlider">
         <div class="q-track" id="qTrack">${quotes.map(t =>
