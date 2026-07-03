@@ -117,9 +117,20 @@
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
     document.title = `${b.name || "Apex Web Development"} | Custom Websites for Local Businesses`;
 
+    renderMarquee(c);
     initReveal(); initFaq();
     initCounters(); initRotator(c); initFolioNav(); initTilt();
     magneticButtons();
+  }
+
+  // scrolling industries ticker — driven by editable content.industries.list
+  function renderMarquee(c) {
+    const track = $("#marqueeTrack");
+    if (!track) return;
+    const items = (c.industries && c.industries.list) || [];
+    if (!items.length) { track.innerHTML = ""; return; }
+    const seq = items.map(x => `<span>${esc(x)}</span><i>✦</i>`).join("");
+    track.innerHTML = seq + seq; // duplicated for a seamless loop
   }
 
   // word-by-word headline reveal (keeps the highlighted word intact)

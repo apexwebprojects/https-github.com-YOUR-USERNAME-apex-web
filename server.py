@@ -104,7 +104,7 @@ DEFAULT_CONTENT = {
     "hero": {
         "eyebrow": "Websites · AI agents · automations · Calgary, AB",
         "headline": "Handmade websites and AI phone agents for local Calgary businesses.",
-        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for lash studios, cafés, groomers, barbershops, salons and local trades across SE Calgary — plus AI phone agents, automations, and custom tech builds for anything that runs on the web.",
+        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for cafés, salons, barbershops and lash studios, and for trades like plumbers, electricians and HVAC — across SE Calgary and the surrounding towns. Plus AI phone agents, automations, and custom tech for anything that runs on the web.",
         "ctaPrimary": "See a site I built for a business like yours",
         "ctaSecondary": "Book a quick call",
         "stat1num": "", "stat1label": "",
@@ -138,6 +138,11 @@ DEFAULT_CONTENT = {
          "features": ["Unlimited pages & custom sections", "Fully bespoke design system", "Booking / e-commerce ready", "Advanced SEO & analytics", "Copywriting assistance", "3 months priority support"], "featured": False, "cta": "Go premium"}
     ],
     "carePlan": {"name": "Care Plan", "price": "99", "period": "/month", "blurb": "Hosting, security, edits, and monthly updates for your site, agents & automations — so you never have to think about the tech.", "enabled": True},
+    "industries": {"list": [
+        "Custom Websites", "Lash & Brow Studios", "Cafés", "Barbershops", "Salons", "Nail Studios",
+        "Pet Groomers", "Plumbers", "Electricians", "HVAC", "Contractors", "Restaurants", "Clinics",
+        "Calgary, Alberta"
+    ]},
     "portfolio": [
         {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
          "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},

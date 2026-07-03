@@ -35,6 +35,8 @@
              { name: "blurb", t: "textarea" }, { name: "features", t: "lines" }, { name: "cta", t: "text" }, { name: "featured", t: "bool" }] },
     { key: "carePlan", label: "🔧 Care Plan", type: "object",
       fields: [{ name: "name", t: "text" }, { name: "price", t: "text" }, { name: "period", t: "text" }, { name: "blurb", t: "textarea" }, { name: "enabled", t: "bool" }] },
+    { key: "industries", label: "🏷 Industries (ticker)", type: "object", help: "The scrolling list of business types you serve. One per line — add or remove any (plumbers, HVAC, cafés, etc.).",
+      fields: [{ name: "list", t: "lines" }] },
     { key: "portfolio", label: "🖼 Work / Portfolio", type: "list", title: "title", help: "Showcase completed work. Upload a photo, or leave blank for a styled mockup.",
       item: [{ name: "title", t: "text" }, { name: "category", t: "text" }, { name: "style", t: "text" },
              { name: "description", t: "textarea" }, { name: "link", t: "text" }, { name: "originalUrl", t: "text" },
@@ -47,7 +49,7 @@
       item: [{ name: "title", t: "text" }, { name: "type", t: "text" }, { name: "location", t: "text" }, { name: "description", t: "textarea" }] },
     { key: "privacy", label: "📄 Privacy Policy", type: "raw", help: "Markdown supported: ## Heading, **bold**, - bullet." }
   ];
-  const LABELS = { ctaPrimary: "Primary button", ctaSecondary: "Secondary button", desc: "Description", q: "Question", a: "Answer", blurb: "Short blurb", cta: "Button text", accent: "Accent color", featured: "Featured (highlight)", enabled: "Show on site", points: "Bullet points (one per line)", features: "Features (one per line)", tags: "Tags (comma separated)", link: "Live site link — your build (Open button)", originalUrl: "Original site link — the old one (See original button)" };
+  const LABELS = { ctaPrimary: "Primary button", ctaSecondary: "Secondary button", desc: "Description", q: "Question", a: "Answer", blurb: "Short blurb", cta: "Button text", accent: "Accent color", featured: "Featured (highlight)", enabled: "Show on site", points: "Bullet points (one per line)", features: "Features (one per line)", tags: "Tags (comma separated)", link: "Live site link — your build (Open button)", originalUrl: "Original site link — the old one (See original button)", list: "Business types — one per line" };
   const label = n => LABELS[n] || n.replace(/([A-Z])/g, " $1").replace(/^./, c => c.toUpperCase());
   const newItem = (sec) => { const o = {}; sec.item.forEach(f => o[f.name] = f.t === "bool" ? false : (f.t === "tags" ? [] : "")); return o; };
 
