@@ -517,3 +517,13 @@ body{background:var(--paper)}
 .cursor-follow.on{opacity:1}
 .cursor-follow.grow{width:58px;height:58px}
 @media(hover:none),(pointer:coarse){.cursor-follow{display:none}}
+
+/* portfolio card link buttons (Open / See original) */
+.folio-cta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--line)}
+.folio-cta a{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--font);font-weight:600;font-size:.82rem;
+  padding:.5rem .85rem;border-radius:8px;transition:background .18s,color .18s,border-color .18s,transform .15s}
+.folio-cta a:hover{transform:translateY(-1px)}
+.folio-open{background:var(--moss);color:var(--paper);border:1px solid var(--moss)}
+.folio-open:hover{background:var(--forest);border-color:var(--forest)}
+.folio-orig{background:transparent;color:var(--forest);border:1px solid var(--line-strong)}
+.folio-orig:hover{border-color:var(--forest);background:var(--bone)}

@@ -401,8 +401,13 @@
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.description || "")}</p>
         <div class="folio-tags">${tags}</div>
+        ${(p.link || p.originalUrl) ? `<div class="folio-cta">
+          ${p.link ? `<a href="${esc(linkHref(p.link))}" target="_blank" rel="noopener noreferrer" class="folio-open">Open ↗</a>` : ""}
+          ${p.originalUrl ? `<a href="${esc(linkHref(p.originalUrl))}" target="_blank" rel="noopener noreferrer" class="folio-orig">See the original</a>` : ""}
+        </div>` : ""}
       </div></div>`;
   }
+  const linkHref = u => u ? (/^https?:\/\//i.test(u) ? u : "https://" + u) : "#";
   function shade(hex) {
     try {
       const n = parseInt(hex.slice(1), 16);
