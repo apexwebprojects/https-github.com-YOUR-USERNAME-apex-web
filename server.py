@@ -148,6 +148,8 @@ DEFAULT_CONTENT = {
     "photos": {"enabled": False, "photo1": "", "photo2": "", "photo3": ""},
     # Selected Work section — OFF by default (no published projects yet). Turn on in admin.
     "work": {"enabled": False},
+    # Testimonials / reviews section — OFF by default. Turn on once you have real reviews.
+    "reviews": {"enabled": False},
     "portfolio": [
         {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
          "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},
