@@ -117,10 +117,21 @@
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
     document.title = `${b.name || "Apex Web Development"} | Custom Websites for Local Businesses`;
 
-    renderMarquee(c); renderPhotoStrip(c);
+    renderMarquee(c); renderPhotoStrip(c); applyWorkToggle(c);
     initReveal(); initFaq();
     initCounters(); initRotator(c); initFolioNav(); initTilt();
     magneticButtons();
+  }
+
+  // Selected Work section on/off (default OFF until real projects are added)
+  function applyWorkToggle(c) {
+    const on = !!(c.work && c.work.enabled);
+    const workSec = document.querySelector("#work");
+    const navWork = document.querySelector('.nav-links a[href="#work"]');
+    const heroBtn = $("#heroCta1"); // the "See a site I built…" CTA points at #work
+    if (workSec) workSec.style.display = on ? "" : "none";
+    if (navWork) navWork.style.display = on ? "" : "none";
+    if (heroBtn) heroBtn.style.display = on ? "" : "none";
   }
 
   // optional photo strip near the top — only shows when enabled in admin + has photos

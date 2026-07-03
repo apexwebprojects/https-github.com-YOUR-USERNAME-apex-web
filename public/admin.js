@@ -37,6 +37,8 @@
       fields: [{ name: "name", t: "text" }, { name: "price", t: "text" }, { name: "period", t: "text" }, { name: "blurb", t: "textarea" }, { name: "enabled", t: "bool" }] },
     { key: "industries", label: "🏷 Industries (ticker)", type: "object", help: "The scrolling list of business types you serve. One per line — add or remove any (plumbers, HVAC, cafés, etc.).",
       fields: [{ name: "list", t: "lines" }] },
+    { key: "work", label: "🗂 Selected Work (on/off)", type: "object", help: "Turn the 'Selected Work' section on or off. Keep it OFF until you have real published projects to show — turn it ON once you've added them under Work / Portfolio. (When off, the 'See a site I built' hero button and the Work menu link hide too.)",
+      fields: [{ name: "enabled", t: "bool" }] },
     { key: "photos", label: "📸 Photo Strip (top of site)", type: "object", help: "Three optional photos shown in a strip near the top of the site. Turn it ON, upload up to 3, and Save. Leave OFF to hide it completely.",
       fields: [{ name: "enabled", t: "bool" }, { name: "photo1", t: "image" }, { name: "photo2", t: "image" }, { name: "photo3", t: "image" }] },
     { key: "portfolio", label: "🖼 Work / Portfolio", type: "list", title: "title", help: "Showcase completed work. Upload a photo, or leave blank for a styled mockup.",

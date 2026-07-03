@@ -146,6 +146,8 @@ DEFAULT_CONTENT = {
     # Optional photo strip near the top — OFF by default; slots live only in admin
     # until you turn it on and upload photos.
     "photos": {"enabled": False, "photo1": "", "photo2": "", "photo3": ""},
+    # Selected Work section — OFF by default (no published projects yet). Turn on in admin.
+    "work": {"enabled": False},
     "portfolio": [
         {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
          "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},
