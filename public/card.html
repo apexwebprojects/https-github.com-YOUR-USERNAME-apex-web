@@ -5,36 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Business Card · Apex Web Development</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315315e'/%3E%3Cpath d='M7 22 L16 10 L25 22' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316362B'/%3E%3Cpath d='M7 22 L16 10 L25 22' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#15315e;--blue:#2456c7;--ink:#15315e;--txt:#33415c;--muted:#64728d;--line:#e6ebf3}
+  :root{--navy:#16362B;--blue:#4C7A5B;--ink:#16362B;--txt:#37332f;--muted:#5a6b5c;--line:#E7DFCD}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#eef2f7;font-family:'Inter',sans-serif;color:var(--txt);padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:26px}
+  body{background:#FAF6EE;font-family:'General Sans',sans-serif;color:var(--txt);padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:26px}
   .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
-  .toolbar h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;color:var(--ink);font-weight:700;margin-right:8px}
-  .btn{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:.7rem 1.3rem;font-family:'Inter',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer}
-  .btn.ghost{background:#fff;color:var(--ink);border:1px solid #d6deeb}
+  .toolbar h1{font-family:'Fraunces',sans-serif;font-size:1.1rem;color:var(--ink);font-weight:700;margin-right:8px}
+  .btn{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:.7rem 1.3rem;font-family:'General Sans',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid #d8cfbb}
   .note{font-size:.82rem;color:var(--muted);max-width:480px;text-align:center;line-height:1.6}
   .sheet{display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
   .label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:8px}
   /* card = 3.5in x 2in */
-  .card{width:3.5in;height:2in;border-radius:12px;overflow:hidden;position:relative;background:#fff;
-        border:1px solid var(--line);box-shadow:0 20px 44px -24px rgba(20,40,80,.4)}
+  .card{width:3.5in;height:2in;border-radius:12px;overflow:hidden;position:relative;background:#FDFBF5;
+        border:1px solid var(--line);box-shadow:0 20px 44px -24px rgba(22,54,43,.32)}
   .card.front{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.09in;text-align:center;padding:0 .3in}
   .card.front .topbar{position:absolute;top:0;left:0;right:0;height:.06in;background:var(--blue)}
   .mark{width:.62in;height:.62in;border-radius:.16in;background:var(--navy);display:flex;align-items:center;justify-content:center}
   .mark.sm{width:.32in;height:.32in;border-radius:.1in}
   .mark svg{width:62%;height:62%}
-  .brand{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.26in;letter-spacing:-.01in;color:var(--navy)}
+  .brand{font-family:'Fraunces',sans-serif;font-weight:700;font-size:.26in;letter-spacing:-.01in;color:var(--navy)}
   .tag{font-size:.135in;color:var(--muted)}
   .accent{width:.6in;height:.035in;border-radius:.03in;background:var(--blue);margin-top:.03in}
   .card.back{display:flex}
   .card.back .bar{width:.09in;background:var(--navy)}
   .back-body{flex:1;padding:.26in .28in;display:flex;flex-direction:column;justify-content:space-between}
   .row1{display:flex;align-items:center;gap:.1in}
-  .wordmark{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.145in;color:var(--muted)}
-  .name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.25in;color:var(--navy);line-height:1.1}
+  .wordmark{font-family:'Fraunces',sans-serif;font-weight:600;font-size:.145in;color:var(--muted)}
+  .name{font-family:'Fraunces',sans-serif;font-weight:700;font-size:.25in;color:var(--navy);line-height:1.1}
   .title{font-size:.135in;color:var(--blue);font-weight:600;margin-top:.02in}
   .contact{display:flex;flex-direction:column;gap:.07in;font-size:.135in;color:var(--txt)}
   .contact div{display:flex;align-items:center;gap:.1in}
