@@ -117,10 +117,22 @@
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
     document.title = `${b.name || "Apex Web Development"} | Custom Websites for Local Businesses`;
 
-    renderMarquee(c);
+    renderMarquee(c); renderPhotoStrip(c);
     initReveal(); initFaq();
     initCounters(); initRotator(c); initFolioNav(); initTilt();
     magneticButtons();
+  }
+
+  // optional photo strip near the top — only shows when enabled in admin + has photos
+  function renderPhotoStrip(c) {
+    const el = $("#photoStrip");
+    if (!el) return;
+    const g = c.photos || {};
+    const imgs = [g.photo1, g.photo2, g.photo3].filter(Boolean);
+    if (!g.enabled || !imgs.length) { el.style.display = "none"; el.innerHTML = ""; return; }
+    el.style.display = "";
+    el.innerHTML = `<div class="wrap"><div class="photo-strip-grid">${imgs.map(src =>
+      `<figure class="ph"><img src="${esc(src)}" alt="Recent work by Apex Web Development" loading="lazy"></figure>`).join("")}</div></div>`;
   }
 
   // scrolling industries ticker — driven by editable content.industries.list
