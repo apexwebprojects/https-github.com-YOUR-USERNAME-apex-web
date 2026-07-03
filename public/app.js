@@ -143,6 +143,61 @@
   }
   function el2(t, c, txt) { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; }
 
+  // interactive hero: a living dot-field that ripples and reacts to the cursor
+  function initHeroCanvas() {
+    const canvas = document.getElementById("heroCanvas");
+    if (!canvas) return;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const ctx = canvas.getContext("2d");
+    const GAP = 34, R = 120;
+    let w = 0, h = 0, dpr = 1, dots = [], t = 0, running = true;
+    const mouse = { x: -9999, y: -9999 };
+
+    function build() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      const r = canvas.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dots = [];
+      for (let y = GAP; y < h; y += GAP)
+        for (let x = GAP; x < w; x += GAP) dots.push({ bx: x, by: y });
+    }
+    function frame() {
+      if (!running) return;
+      t += 0.016;
+      ctx.clearRect(0, 0, w, h);
+      for (const d of dots) {
+        const wave = Math.sin(d.bx * 0.018 + d.by * 0.02 + t * 1.25) * 1.5;
+        let px = d.bx, py = d.by + wave, r = 1.1, col = "rgba(26,22,20,.16)";
+        const dx = px - mouse.x, dy = py - mouse.y, dist = Math.hypot(dx, dy);
+        if (dist < R) {
+          const f = 1 - dist / R;
+          px += (dx / (dist || 1)) * f * 16;
+          py += (dy / (dist || 1)) * f * 16;
+          r = 1.1 + f * 2.8;
+          col = "rgba(255,119,51," + (0.22 + f * 0.65).toFixed(3) + ")";
+        }
+        ctx.beginPath(); ctx.arc(px, py, r, 0, 6.2832); ctx.fillStyle = col; ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    window.addEventListener("resize", build);
+    window.addEventListener("mousemove", e => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    window.addEventListener("mouseout", () => { mouse.x = -9999; mouse.y = -9999; });
+    new IntersectionObserver(es => {
+      es.forEach(e => {
+        const was = running; running = e.isIntersecting;
+        if (running && !was) requestAnimationFrame(frame);
+      });
+    }, { threshold: 0 }).observe(canvas);
+    build();
+    requestAnimationFrame(frame);
+  }
+
   // buttons drift subtly toward the cursor
   function magneticButtons() {
     if (!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
@@ -440,7 +495,7 @@
 
   // ---------- boot ----------
   async function boot() {
-    initNav(); initForm(); Chat.init();
+    initNav(); initForm(); Chat.init(); initHeroCanvas();
     try {
       const r = await fetch("/api/content");
       CONTENT = await r.json();
