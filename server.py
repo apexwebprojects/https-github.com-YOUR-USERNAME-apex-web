@@ -102,14 +102,14 @@ DEFAULT_CONTENT = {
         "hours": "Mon–Fri 9am–6pm MT"
     },
     "hero": {
-        "eyebrow": "Custom Web Design & Development",
-        "headline": "Your business deserves a website that wins customers.",
-        "sub": "I build fast, modern, custom websites for local and established businesses — replacing tired, outdated designs with sites that look premium and actually convert.",
-        "ctaPrimary": "Get a Free Quote",
-        "ctaSecondary": "See My Work",
-        "stat1num": "100%", "stat1label": "Custom-built, never templated",
-        "stat2num": "1.2s", "stat2label": "Typical load time",
-        "stat3num": "24/7", "stat3label": "Direct line to the developer"
+        "eyebrow": "Web design & AI voice agents · Calgary, AB",
+        "headline": "Handmade websites and AI phone agents for local Calgary businesses.",
+        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for lash & brow studios, cafés, groomers, barbershops, salons and local trades across SE Calgary and the surrounding towns.",
+        "ctaPrimary": "See a site I built for a business like yours",
+        "ctaSecondary": "Book a quick call",
+        "stat1num": "", "stat1label": "",
+        "stat2num": "", "stat2label": "",
+        "stat3num": "", "stat3label": ""
     },
     "about": {
         "heading": "Hi, I'm Ben — the developer behind Apex.",
@@ -139,6 +139,8 @@ DEFAULT_CONTENT = {
     ],
     "carePlan": {"name": "Care Plan", "price": "49", "period": "/month", "blurb": "Hosting help, security, edits & monthly updates so you never worry about your site.", "enabled": True},
     "portfolio": [
+        {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
+         "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},
         {"title": "Summit Grill & Tap", "category": "Restaurant", "style": "Bold & Appetizing",
          "description": "A warm, photo-forward site with an immersive menu and reservation flow — built to make people hungry.", "image": "", "tags": ["Restaurant", "Menu", "Bookings"], "accent": "#E8593B"},
         {"title": "Whitaker Law Group", "category": "Professional Services", "style": "Minimal & Trustworthy",
@@ -402,8 +404,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Security-Policy",
                          "default-src 'self'; "
                          "script-src 'self' 'unsafe-inline'; "
-                         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-                         "font-src 'self' https://fonts.gstatic.com; "
+                         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; "
+                         "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com; "
                          "img-src 'self' data:; "
                          "connect-src 'self'; "
                          "form-action 'self'; base-uri 'self'; frame-ancestors 'none'")

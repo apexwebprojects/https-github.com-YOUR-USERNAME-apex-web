@@ -4,40 +4,43 @@
    monospace micro-labels, numbered sections, quiet motion.
    ============================================================ */
 :root{
-  /* Antimetal palette — warm greige canvas, ink, chartreuse + orange accents */
-  --bg:#d7d7d0;
-  --bg-2:#cfcfc8;
-  --panel:#fdfcfa;
-  --panel-2:#efeee6;
-  --line:rgba(26,22,20,.13);
-  --line-strong:rgba(26,22,20,.24);
-  --ink:#1a1614;
-  --txt:#37332f;
-  --muted:#5a5650;
-  --muted-2:#918c82;
-  --navy:#1a1614;          /* dark surfaces / primary button / featured card */
-  --navy-deep:#000000;
-  --brand:#cf4a1f;         /* rust-orange — links & small accents (readable on greige) */
-  --brand-deep:#b23c17;
-  --lime:#e2e67d;          /* chartreuse — signature highlight */
-  --lime-deep:#c9ce5a;
-  --hot:#ff7733;           /* orange pop — status dot, energy */
-  --cream:#f4f4e7;         /* text on dark surfaces */
-  --blue-soft:#e9ebc4;     /* lime tint fill */
-  --navy-soft:#e7e5da;
-  --gold:#c98a2a;          /* warm amber — review stars */
-  --accent:#cf4a1f;
-  --radius:10px;
-  --radius-sm:7px;
-  --shadow:0 18px 40px -24px rgba(26,22,20,.30);
-  --shadow-sm:0 6px 18px -12px rgba(26,22,20,.22);
+  /* ApexWeb — organic green on warm paper (design brief). No pure #fff / #000. */
+  --paper:#FAF6EE; --bone:#F1EBDD; --oat:#E7DFCD;
+  --evergreen:#16362B; --forest:#24503F; --moss:#4C7A5B; --sprout:#7FB069; --sage:#8CA88E;
+  --clay:#C77E56;
+  --bg:#FAF6EE;
+  --bg-2:#F1EBDD;
+  --panel:#FBF8F1;
+  --panel-2:#F1EBDD;
+  --line:rgba(30,38,33,.13);
+  --line-strong:rgba(30,38,33,.22);
+  --ink:#1E2621;
+  --txt:#4A544C;
+  --muted:#4A544C;
+  --muted-2:#7d8a7f;
+  --navy:#16362B;          /* dark drama sections / featured / CTA = evergreen */
+  --navy-deep:#0f261e;
+  --brand:#4C7A5B;         /* moss — primary buttons, links */
+  --brand-deep:#24503F;    /* forest — hover */
+  --lime:#7FB069;          /* sprout — fresh highlight */
+  --lime-deep:#6a9a58;
+  --hot:#C77E56;           /* clay — single warm pop, sparingly */
+  --cream:#FAF6EE;         /* text on dark surfaces = paper */
+  --blue-soft:#e6efe1;     /* soft moss tint fill */
+  --navy-soft:#e7eee6;
+  --gold:#C77E56;
+  --accent:#4C7A5B;
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 22px 48px -26px rgba(22,54,43,.28);
+  --shadow-sm:0 8px 22px -14px rgba(22,54,43,.20);
   --hard:none;
   --hard-solid:none;
-  --maxw:1160px;
-  --font:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --display:'Geist',-apple-system,sans-serif;
-  --serif:'Geist',Georgia,serif;
-  --mono:'Geist Mono','SF Mono',Menlo,monospace;
+  --maxw:1180px;
+  --font:'General Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --display:'Fraunces','Georgia',serif;
+  --serif:'Fraunces',Georgia,serif;
+  --mono:'General Sans',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -453,3 +456,51 @@ footer .logo{color:var(--ink)}
 .hero > .wrap{position:relative;z-index:1}
 /* the fixed dotted grid steps aside so the live canvas owns the hero */
 .hero .bg-fx{opacity:0}
+
+/* ============================================================
+   ApexWeb — hero rebuild (design brief): organic green on paper
+   ============================================================ */
+body{background:var(--paper)}
+.hero{background:var(--paper);overflow:hidden}
+.hero-canvas{display:none}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-bg .blob{position:absolute;border-radius:50%;filter:blur(66px);will-change:transform}
+.hero-bg .b1{width:560px;height:560px;background:radial-gradient(circle,var(--moss),transparent 66%);opacity:.5;top:-150px;left:-100px;animation:drift1 19s ease-in-out infinite alternate}
+.hero-bg .b2{width:470px;height:470px;background:radial-gradient(circle,var(--sprout),transparent 66%);opacity:.5;top:30px;right:-130px;animation:drift2 23s ease-in-out infinite alternate}
+.hero-bg .b3{width:410px;height:410px;background:radial-gradient(circle,var(--sage),transparent 68%);opacity:.5;bottom:-170px;left:24%;animation:drift3 21s ease-in-out infinite alternate}
+.hero-bg .b4{width:330px;height:330px;background:radial-gradient(circle,var(--forest),transparent 62%);opacity:.22;top:36%;left:52%;animation:drift1 27s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(74px,54px) scale(1.12)}}
+@keyframes drift2{to{transform:translate(-66px,46px) scale(1.09)}}
+@keyframes drift3{to{transform:translate(56px,-54px) scale(1.1)}}
+.hero-bg .leaf{position:absolute;width:26px;height:26px;opacity:.55;background:var(--moss);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C7 6 4 10 4 15a8 8 0 0 0 16 0c0-5-3-9-8-13z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C7 6 4 10 4 15a8 8 0 0 0 16 0c0-5-3-9-8-13z'/%3E%3C/svg%3E") center/contain no-repeat}
+.hero-bg .lf1{top:19%;left:9%;background:var(--moss);animation:floatL 15s ease-in-out infinite}
+.hero-bg .lf2{top:66%;right:15%;background:var(--sprout);width:20px;height:20px;animation:floatL 18s ease-in-out infinite reverse}
+.hero-bg .lf3{top:32%;right:33%;background:var(--sage);width:16px;height:16px;animation:floatL 21s ease-in-out infinite}
+@keyframes floatL{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-24px) rotate(12deg)}}
+.hero > .wrap{position:relative;z-index:1}
+
+/* headline — Fraunces, confident, with a sprout marker under the key word */
+.hero h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,6vw,4.9rem);line-height:1.03;letter-spacing:-.015em;color:var(--ink);max-width:16ch}
+.hero h1 .grad,.hero h1 .word .grad{background:linear-gradient(transparent 58%,rgba(127,176,105,.6) 0);color:var(--ink);padding:0 .05em;border-radius:0;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero .eyebrow{color:var(--forest)}
+.hero .eyebrow .dot{background:var(--sprout);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(127,176,105,.5)}50%{box-shadow:0 0 0 6px rgba(127,176,105,0)}}
+.hero p.lead{color:var(--txt);font-family:var(--font);max-width:56ch}
+.hero-stats{display:none}
+.specialty{color:var(--muted);font-family:var(--font)}
+.specialty::before{color:var(--moss)}
+#rotateWord{color:var(--forest)}
+#rotateWord::after{color:var(--sprout)}
+
+/* buttons: moss → forest, clay accent on the primary as a warm pop */
+.btn-primary{background:var(--moss);border-color:var(--moss);color:var(--paper)}
+.btn-primary:hover{background:var(--forest);border-color:var(--forest)}
+.btn-ghost{background:transparent;color:var(--forest);border-color:var(--sage)}
+.btn-ghost:hover{border-color:var(--forest);color:var(--forest);background:var(--bone)}
+
+/* soft dotted bg becomes sage & very subtle */
+.bg-fx{background-image:radial-gradient(rgba(76,122,91,.18) 1px,transparent 1px)}
+
+@media(prefers-reduced-motion:reduce){.hero-bg .blob,.hero-bg .leaf{animation:none}}

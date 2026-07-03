@@ -295,7 +295,7 @@
 
   function highlight(h) {
     // emphasize a key word with gradient
-    const words = ["website", "websites", "customers", "proud", "leaders"];
+    const words = ["Calgary", "handmade", "AI phone agents", "websites", "local"];
     let out = esc(h);
     for (const w of words) {
       const re = new RegExp(`\\b(${w})\\b`, "i");
