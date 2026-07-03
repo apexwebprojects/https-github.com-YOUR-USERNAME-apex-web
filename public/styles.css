@@ -434,3 +434,15 @@ footer .logo{color:var(--ink)}
 .marquee-track i{color:var(--hot)}
 .card:hover .ico{background:var(--lime);color:var(--ink)}
 .folio-body .cat,.card::before:hover{color:var(--brand)}
+
+/* ===== kinetic layer (original motion) ===== */
+.hero h1 .word{display:inline-block;opacity:0;transform:translateY(28px);
+  animation:wordUp .72s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i) * 55ms)}
+.hero h1 .word .grad{display:inline-block}
+@keyframes wordUp{to{opacity:1;transform:none}}
+.btn{will-change:transform}
+.marquee-track{gap:2.4rem}
+@media (prefers-reduced-motion: reduce){
+  .hero h1 .word{animation:none;opacity:1;transform:none}
+  .marquee-track,.orb,#rotateWord::after{animation:none}
+}

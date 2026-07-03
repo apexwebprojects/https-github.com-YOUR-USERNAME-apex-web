@@ -30,6 +30,7 @@
     // hero
     $("#heroEyebrow").textContent = hero.eyebrow || "";
     $("#heroHeadline").innerHTML = highlight(hero.headline || "");
+    animateHeadline($("#heroHeadline"));
     $("#heroSub").textContent = hero.sub || "";
     $("#heroCta1").textContent = hero.ctaPrimary || "Get a Quote";
     $("#heroCta2").textContent = hero.ctaSecondary || "See My Work";
@@ -118,6 +119,43 @@
 
     initReveal(); initFaq();
     initCounters(); initRotator(c); initFolioNav(); initTilt();
+    magneticButtons();
+  }
+
+  // word-by-word headline reveal (keeps the highlighted word intact)
+  function animateHeadline(el) {
+    if (!el) return;
+    if (matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("in"); return; }
+    const nodes = Array.from(el.childNodes);
+    el.innerHTML = "";
+    let i = 0;
+    nodes.forEach(node => {
+      if (node.nodeType === 3) {
+        node.textContent.split(/(\s+)/).forEach(tok => {
+          if (tok.trim() === "") { el.appendChild(document.createTextNode(tok)); return; }
+          const w = el2("span", "word", tok); w.style.setProperty("--i", i++); el.appendChild(w);
+        });
+      } else {
+        const w = el2("span", "word"); w.style.setProperty("--i", i++); w.appendChild(node); el.appendChild(w);
+      }
+    });
+    el.classList.add("in", "words-ready");
+  }
+  function el2(t, c, txt) { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; }
+
+  // buttons drift subtly toward the cursor
+  function magneticButtons() {
+    if (!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
+    document.querySelectorAll(".btn").forEach(b => {
+      if (b._mag) return; b._mag = true;
+      b.addEventListener("mousemove", e => {
+        const r = b.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.22;
+        const y = (e.clientY - r.top - r.height / 2) * 0.35;
+        b.style.transform = `translate(${x}px,${y}px)`;
+      });
+      b.addEventListener("mouseleave", () => { b.style.transform = ""; });
+    });
   }
 
   // ---------- engagement effects ----------
@@ -275,11 +313,17 @@
   function initNav() {
     const nav = $("#nav");
     const bar = $("#scrollProgress");
+    const bgfx = $(".bg-fx");
+    let ticking = false;
     window.addEventListener("scroll", () => {
       nav.classList.toggle("scrolled", window.scrollY > 20);
       if (bar) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+      }
+      if (bgfx && !ticking) {
+        ticking = true;
+        requestAnimationFrame(() => { bgfx.style.transform = `translateY(${window.scrollY * 0.12}px)`; ticking = false; });
       }
     });
     $("#burger").addEventListener("click", () => $("#navLinks").classList.toggle("mobile-open"));
