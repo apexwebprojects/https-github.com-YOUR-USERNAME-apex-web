@@ -102,9 +102,9 @@ DEFAULT_CONTENT = {
         "hours": "Mon–Fri 9am–6pm MT"
     },
     "hero": {
-        "eyebrow": "Web design & AI voice agents · Calgary, AB",
+        "eyebrow": "Websites · AI agents · automations · Calgary, AB",
         "headline": "Handmade websites and AI phone agents for local Calgary businesses.",
-        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for lash & brow studios, cafés, groomers, barbershops, salons and local trades across SE Calgary and the surrounding towns.",
+        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for lash studios, cafés, groomers, barbershops, salons and local trades across SE Calgary — plus AI phone agents, automations, and custom tech builds for anything that runs on the web.",
         "ctaPrimary": "See a site I built for a business like yours",
         "ctaSecondary": "Book a quick call",
         "stat1num": "", "stat1label": "",
@@ -122,12 +122,12 @@ DEFAULT_CONTENT = {
         ]
     },
     "services": [
-        {"icon": "✦", "title": "Custom Website Design", "desc": "A unique, hand-crafted design built around your brand — not a template thousands of others already use."},
+        {"icon": "✦", "title": "Custom Websites", "desc": "A unique, hand-crafted site built around your brand — not a template thousands of others already use."},
+        {"icon": "☎", "title": "AI Voice Agents", "desc": "An AI phone agent that answers calls, books appointments, and takes messages 24/7 — so you never miss a customer."},
+        {"icon": "⚡", "title": "AI Automations", "desc": "Connect your tools and automate the busywork — bookings, follow-ups, reminders, invoices — so the little tasks run themselves."},
+        {"icon": "◆", "title": "Custom Tech Builds", "desc": "Dashboards, booking systems, internal tools, integrations — if it runs on the web, I can build it for you."},
         {"icon": "↻", "title": "Redesigns & Rescues", "desc": "Have an outdated or broken site? I rebuild it into something modern, fast, and credible."},
-        {"icon": "⚡", "title": "Performance & SEO", "desc": "Lightning-fast load times and clean, search-friendly code so customers actually find you."},
-        {"icon": "▢", "title": "Mobile-First Build", "desc": "Most of your visitors are on a phone. Every site is designed to feel perfect there first."},
-        {"icon": "✉", "title": "Lead & Contact Systems", "desc": "Contact forms, click-to-call, live chat, and booking — turn visitors into real inquiries."},
-        {"icon": "⚙", "title": "Care & Maintenance", "desc": "Ongoing updates, hosting help, edits, and peace of mind so your site never goes stale."}
+        {"icon": "⚙", "title": "Care & Maintenance", "desc": "Ongoing hosting, updates, edits, and support for your site, agents, and automations — peace of mind, handled."}
     ],
     "pricing": [
         {"name": "Starter", "price": "999", "period": "one-time", "blurb": "Perfect for a clean, professional one-page presence.",
@@ -137,7 +137,7 @@ DEFAULT_CONTENT = {
         {"name": "Premium", "price": "2,999", "period": "one-time", "blurb": "A standout site with the works for businesses going all-in.",
          "features": ["Unlimited pages & custom sections", "Fully bespoke design system", "Booking / e-commerce ready", "Advanced SEO & analytics", "Copywriting assistance", "3 months priority support"], "featured": False, "cta": "Go premium"}
     ],
-    "carePlan": {"name": "Care Plan", "price": "49", "period": "/month", "blurb": "Hosting help, security, edits & monthly updates so you never worry about your site.", "enabled": True},
+    "carePlan": {"name": "Care Plan", "price": "99", "period": "/month", "blurb": "Hosting, security, edits, and monthly updates for your site, agents & automations — so you never have to think about the tech.", "enabled": True},
     "portfolio": [
         {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
          "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},

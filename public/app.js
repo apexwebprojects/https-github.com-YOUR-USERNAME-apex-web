@@ -198,6 +198,49 @@
     requestAnimationFrame(frame);
   }
 
+  // floating pollen/spore drift — soft particles rising through the hero
+  function initPollen() {
+    const canvas = document.getElementById("pollen");
+    if (!canvas) return;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const ctx = canvas.getContext("2d");
+    const N = 46, COLS = ["127,176,105", "140,168,142", "76,122,91"]; // sprout, sage, moss
+    let w = 0, h = 0, dpr = 1, parts = [], running = true, t = 0;
+    function spawn(anywhere) {
+      return {
+        x: Math.random() * w, y: anywhere ? Math.random() * h : h + 12,
+        r: Math.random() * 2 + 0.8, vy: -(Math.random() * 0.28 + 0.12),
+        drift: Math.random() * 0.6 + 0.2, phase: Math.random() * 6.28,
+        a: Math.random() * 0.4 + 0.16, c: COLS[(Math.random() * COLS.length) | 0]
+      };
+    }
+    function build() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      const r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!parts.length) for (let i = 0; i < N; i++) parts.push(spawn(true));
+    }
+    function frame() {
+      if (!running) return;
+      t += 0.016; ctx.clearRect(0, 0, w, h);
+      for (const p of parts) {
+        p.y += p.vy; p.x += Math.sin(t * p.drift + p.phase) * 0.4;
+        if (p.y < -12) Object.assign(p, spawn(false));
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = "rgba(" + p.c + "," + p.a + ")"; ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    window.addEventListener("resize", build);
+    new IntersectionObserver(es => es.forEach(e => {
+      const was = running; running = e.isIntersecting;
+      if (running && !was) requestAnimationFrame(frame);
+    }), { threshold: 0 }).observe(canvas);
+    build();
+    requestAnimationFrame(frame);
+  }
+
   // buttons drift subtly toward the cursor
   function magneticButtons() {
     if (!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
@@ -495,7 +538,7 @@
 
   // ---------- boot ----------
   async function boot() {
-    initNav(); initForm(); Chat.init(); initHeroCanvas();
+    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen();
     try {
       const r = await fetch("/api/content");
       CONTENT = await r.json();

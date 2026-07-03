@@ -504,3 +504,7 @@ body{background:var(--paper)}
 .bg-fx{background-image:radial-gradient(rgba(76,122,91,.18) 1px,transparent 1px)}
 
 @media(prefers-reduced-motion:reduce){.hero-bg .blob,.hero-bg .leaf{animation:none}}
+
+/* floating pollen/spore drift (moving element) */
+.hero-pollen{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.hero-pollen{display:none}}
