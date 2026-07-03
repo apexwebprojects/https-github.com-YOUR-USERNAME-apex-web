@@ -241,26 +241,25 @@
     requestAnimationFrame(frame);
   }
 
-  // soft glow that smoothly trails the cursor (grows over clickable things)
-  function initCursorFollow() {
-    const el = document.getElementById("cursorFollow");
-    if (!el || !window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
-    let tx = window.innerWidth / 2, ty = window.innerHeight / 2, x = tx, y = ty, shown = false;
-    window.addEventListener("mousemove", e => {
-      tx = e.clientX; ty = e.clientY;
-      if (!shown) { shown = true; el.classList.add("on"); }
+  // hero mouse-parallax — the organic background layers drift with the cursor for depth
+  function initHeroParallax() {
+    const hero = document.querySelector(".hero"), bg = document.querySelector(".hero-bg");
+    if (!hero || !bg || !window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let tx = 0, ty = 0, x = 0, y = 0, active = false;
+    hero.addEventListener("mousemove", e => {
+      const r = hero.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - 0.5;
+      ty = (e.clientY - r.top) / r.height - 0.5;
+      if (!active) { active = true; loop(); }
     });
-    document.addEventListener("mouseover", e => {
-      if (e.target.closest("a,button,.btn,.folio-card,.card,.faq-q")) el.classList.add("grow");
-    });
-    document.addEventListener("mouseout", e => {
-      if (e.target.closest("a,button,.btn,.folio-card,.card,.faq-q")) el.classList.remove("grow");
-    });
-    (function loop() {
-      x += (tx - x) * 0.18; y += (ty - y) * 0.18;
-      el.style.transform = "translate3d(" + x + "px," + y + "px,0) translate(-50%,-50%)";
-      requestAnimationFrame(loop);
-    })();
+    hero.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
+    function loop() {
+      x += (tx - x) * 0.06; y += (ty - y) * 0.06;
+      bg.style.transform = "translate(" + (x * 34).toFixed(1) + "px," + (y * 26).toFixed(1) + "px)";
+      if (Math.abs(tx - x) > 0.001 || Math.abs(ty - y) > 0.001 || tx !== 0 || ty !== 0) requestAnimationFrame(loop);
+      else active = false;
+    }
   }
 
   // buttons drift subtly toward the cursor
@@ -560,7 +559,7 @@
 
   // ---------- boot ----------
   async function boot() {
-    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen(); initCursorFollow();
+    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen(); initHeroParallax();
     try {
       const r = await fetch("/api/content");
       CONTENT = await r.json();

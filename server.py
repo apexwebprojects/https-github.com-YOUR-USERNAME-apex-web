@@ -526,7 +526,7 @@ class Handler(BaseHTTPRequestHandler):
         ctype = mimetypes.guess_type(full)[0] or "application/octet-stream"
         with open(full, "rb") as f:
             data = f.read()
-        cache = "no-cache" if full.endswith((".html",)) else "public, max-age=3600"
+        cache = "no-cache" if full.endswith((".html", ".css", ".js")) else "public, max-age=3600"
         self._send(200, data, ctype, {"Cache-Control": cache})
 
     def serve_upload(self, path):
