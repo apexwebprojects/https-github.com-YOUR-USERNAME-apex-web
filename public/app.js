@@ -559,7 +559,7 @@
 
   // ---------- boot ----------
   async function boot() {
-    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen(); initHeroParallax();
+    // 1) Content first — nothing else may block the page from rendering.
     try {
       const r = await fetch("/api/content");
       CONTENT = await r.json();
@@ -567,6 +567,13 @@
     } catch (e) {
       console.error("Failed to load content", e);
     }
+    // 2) Safety net — a reveal element must never stay invisible.
+    setTimeout(function () {
+      document.querySelectorAll(".reveal:not(.in)").forEach(function (r) { r.classList.add("in"); });
+    }, 2200);
+    // 3) Enhancements — each isolated so a single failure can't blank the page.
+    [initNav, initForm, function () { Chat.init(); }, initHeroCanvas, initPollen, initHeroParallax]
+      .forEach(function (fn) { try { fn(); } catch (e) { console.warn("init skipped:", e); } });
   }
   document.addEventListener("DOMContentLoaded", boot);
 })();
