@@ -241,6 +241,28 @@
     requestAnimationFrame(frame);
   }
 
+  // soft glow that smoothly trails the cursor (grows over clickable things)
+  function initCursorFollow() {
+    const el = document.getElementById("cursorFollow");
+    if (!el || !window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2, x = tx, y = ty, shown = false;
+    window.addEventListener("mousemove", e => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; el.classList.add("on"); }
+    });
+    document.addEventListener("mouseover", e => {
+      if (e.target.closest("a,button,.btn,.folio-card,.card,.faq-q")) el.classList.add("grow");
+    });
+    document.addEventListener("mouseout", e => {
+      if (e.target.closest("a,button,.btn,.folio-card,.card,.faq-q")) el.classList.remove("grow");
+    });
+    (function loop() {
+      x += (tx - x) * 0.18; y += (ty - y) * 0.18;
+      el.style.transform = "translate3d(" + x + "px," + y + "px,0) translate(-50%,-50%)";
+      requestAnimationFrame(loop);
+    })();
+  }
+
   // buttons drift subtly toward the cursor
   function magneticButtons() {
     if (!window.matchMedia || !matchMedia("(pointer:fine)").matches) return;
@@ -538,7 +560,7 @@
 
   // ---------- boot ----------
   async function boot() {
-    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen();
+    initNav(); initForm(); Chat.init(); initHeroCanvas(); initPollen(); initCursorFollow();
     try {
       const r = await fetch("/api/content");
       CONTENT = await r.json();
