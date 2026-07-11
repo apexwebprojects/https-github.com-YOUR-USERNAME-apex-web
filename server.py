@@ -137,7 +137,17 @@ DEFAULT_CONTENT = {
         {"name": "Premium", "price": "2,999", "period": "one-time", "blurb": "A standout site with the works for businesses going all-in.",
          "features": ["Unlimited pages & custom sections", "Fully bespoke design system", "Booking / e-commerce ready", "Advanced SEO & analytics", "Copywriting assistance", "3 months priority support"], "featured": False, "cta": "Go premium"}
     ],
-    "carePlan": {"name": "Care Plan", "price": "99", "period": "/month", "blurb": "Hosting, security, edits, and monthly updates for your site, agents & automations — so you never have to think about the tech.", "enabled": True},
+    "carePlans": [
+        {"name": "Care", "price": "99", "period": "/month", "featured": False,
+         "blurb": "The essentials, handled — so your site never goes stale.",
+         "features": ["Managed hosting & SSL", "Security, updates & backups", "Up to 2 content edits / month", "Email support"]},
+        {"name": "Care Plus", "price": "149", "period": "/month", "featured": True,
+         "blurb": "For businesses that change often and want to stay sharp.",
+         "features": ["Everything in Care", "Priority edits (up to 5 / month)", "Monthly refresh & content updates", "Basic SEO check-ins"]},
+        {"name": "Premium Care", "price": "199", "period": "/month", "featured": False,
+         "blurb": "Full care for your site, AI agents & automations.",
+         "features": ["Everything in Care Plus", "AI agent & automation upkeep", "Monthly analytics report", "Priority phone & text support"]}
+    ],
     "industries": {"list": [
         "Custom Websites", "Lash & Brow Studios", "Cafés", "Barbershops", "Salons", "Nail Studios",
         "Pet Groomers", "Plumbers", "Electricians", "HVAC", "Contractors", "Restaurants", "Clinics",
@@ -393,6 +403,7 @@ S_LEAD       = {"id": {"type": int, "required": True, "min": 1}, "handled": {"ty
 S_PW         = {"current": {"type": str, "required": True, "max": 200},
                 "new": {"type": str, "required": True, "min": 8, "max": 200}}
 S_NONE       = {}   # endpoints that take no body — still reject unexpected fields
+S_SUBSCRIBE  = {"plan": {"type": int, "min": 0, "max": 50}}  # which care tier (index)
 
 # ---------------------------------------------------------------------------
 # Request handler
@@ -712,18 +723,20 @@ class Handler(BaseHTTPRequestHandler):
                     return self._too_many()
                 if not STRIPE_SECRET_KEY:
                     return self._json({"error": "Online payments aren't set up yet. Please contact us."}, 400)
-                _, err = validate(body, S_NONE)   # takes no input; reject any injected fields
+                data, err = validate(body, S_SUBSCRIBE)   # {plan: index of the chosen tier}
                 if err:
                     return self._json({"error": err}, 400)
-                care = (json.loads(get_setting(c, "content")).get("carePlan") or {})
-                if care.get("enabled") is False:
-                    return self._json({"error": "The Care Plan isn't available right now."}, 400)
+                plans = (json.loads(get_setting(c, "content")).get("carePlans") or [])
+                idx = data.get("plan") or 0
+                if idx < 0 or idx >= len(plans):
+                    return self._json({"error": "That care plan isn't available."}, 400)
+                care = plans[idx]
                 try:
                     cents = int(round(float(str(care.get("price", "")).replace(",", "")) * 100))
                 except (TypeError, ValueError):
                     cents = 0
                 if cents < 100:
-                    return self._json({"error": "The Care Plan price isn't set up yet."}, 400)
+                    return self._json({"error": "That care plan price isn't set up yet."}, 400)
                 base = self._base_url()
                 sess = stripe_post("checkout/sessions", {
                     "mode": "subscription",

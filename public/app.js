@@ -53,12 +53,13 @@
 
     // pricing
     $("#priceGrid").innerHTML = (c.pricing || []).map(p => priceCard(p)).join("");
-    const care = c.carePlan || {};
-    $("#careWrap").innerHTML = (care.enabled === false) ? "" :
-      `<div class="care reveal">
-        <div><h4>${esc(care.name || "Care Plan")}</h4><p>${esc(care.blurb || "")}</p></div>
-        <div style="text-align:right"><div class="ca-price">$${esc(care.price || "")}<span style="font-size:1rem;color:var(--muted)">${esc(care.period || "/mo")}</span></div>
-        <a href="#contact" class="btn btn-ghost" style="margin-top:.5rem">Add to any plan</a></div></div>`;
+    const plans = c.carePlans || [];
+    $("#careWrap").innerHTML = !plans.length ? "" :
+      `<div class="care-head reveal">
+        <h3>Ongoing care plans</h3>
+        <p>Keep your site, AI agents and automations running smoothly — monthly, cancel anytime.</p>
+      </div>
+      <div class="price-grid care-plans">${plans.map(p => carePlanCard(p)).join("")}</div>`;
 
     // about
     const ab = c.about || {};
@@ -413,6 +414,17 @@
       <div class="amount"><span class="cur">$</span><span class="val">${esc(p.price)}</span><span class="per">${esc(p.period || "")}</span></div>
       <ul>${feats}</ul>
       <a href="#contact" class="btn ${p.featured ? "btn-primary" : "btn-ghost"} btn-block">${esc(p.cta || "Get started")}</a>
+    </div>`;
+  }
+
+  function carePlanCard(p) {
+    const feats = (p.features || []).map(f => `<li>${CHECK}<span>${esc(f)}</span></li>`).join("");
+    return `<div class="price reveal ${p.featured ? "featured" : ""}">
+      ${p.featured ? '<div class="badge">Most Popular</div>' : ""}
+      <h3>${esc(p.name)}</h3><div class="blurb">${esc(p.blurb || "")}</div>
+      <div class="amount"><span class="cur">$</span><span class="val">${esc(p.price)}</span><span class="per">${esc(p.period || "/month")}</span></div>
+      <ul>${feats}</ul>
+      <a href="/pay" class="btn ${p.featured ? "btn-primary" : "btn-ghost"} btn-block">Subscribe</a>
     </div>`;
   }
 

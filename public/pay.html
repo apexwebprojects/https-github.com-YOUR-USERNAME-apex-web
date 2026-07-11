@@ -87,11 +87,10 @@
         </div>
 
         <div id="careSection" style="display:none;border-top:1px solid var(--line);margin-top:1.7rem;padding-top:1.6rem">
-          <div style="font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.1rem;margin-bottom:.3rem" id="careName">Monthly Care Plan</div>
-          <div style="color:var(--muted);font-size:.93rem;margin-bottom:1.1rem" id="careBlurb"></div>
+          <div style="font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.15rem;margin-bottom:.25rem">Monthly Care Plans</div>
+          <div style="color:var(--muted);font-size:.9rem;margin-bottom:1.1rem">Ongoing care for your site, agents &amp; automations — billed monthly, cancel anytime.</div>
           <div class="pay-msg" id="careMsg"></div>
-          <button class="btn btn-ghost btn-block btn-lg" id="careBtn">Subscribe — <span id="carePrice"></span>/month</button>
-          <div style="text-align:center;color:var(--muted-2);font-size:.78rem;margin-top:.6rem">Billed monthly · cancel anytime</div>
+          <div id="careTiers"></div>
         </div>
       </div>
 
@@ -144,22 +143,32 @@
       });
     });
 
-    // Monthly Care Plan subscription
-    var care=content.carePlan||{};
-    if(care.enabled!==false && String(care.price||"").replace(/[^0-9.]/g,"")){
-      $("#careName").textContent=care.name||"Monthly Care Plan";
-      $("#careBlurb").textContent=care.blurb||"Ongoing updates, hosting help and edits — peace of mind so your site never goes stale.";
-      $("#carePrice").textContent="$"+String(care.price).replace(/[^0-9.,]/g,"");
+    // Monthly Care Plan subscriptions (one button per tier)
+    var plans=content.carePlans||[];
+    var careMsg=$("#careMsg");
+    if(plans.length){
       $("#careSection").style.display="block";
-      var careBtn=$("#careBtn"), careMsg=$("#careMsg"), careOrig=careBtn.innerHTML;
-      careBtn.addEventListener("click",function(){
-        careMsg.className="pay-msg"; careMsg.textContent="";
-        careBtn.disabled=true; careBtn.textContent="Redirecting to secure checkout…";
-        fetch("/api/pay/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"})
-          .then(function(r){return r.json();}).then(function(j){
-            if(j.url){window.location.href=j.url;}
-            else{careMsg.className="pay-msg err";careMsg.textContent=j.error||"Something went wrong.";careBtn.disabled=false;careBtn.innerHTML=careOrig;}
-          }).catch(function(){careMsg.className="pay-msg err";careMsg.textContent="Network error. Please try again.";careBtn.disabled=false;careBtn.innerHTML=careOrig;});
+      var host=$("#careTiers");
+      host.innerHTML=plans.map(function(p,i){
+        var price=String(p.price||"").replace(/[^0-9.,]/g,"");
+        return '<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;'+
+          'border:1px solid var(--line-strong);border-radius:10px;padding:.9rem 1rem;margin-bottom:.7rem'+
+          (p.featured?';border-color:var(--brand);background:var(--blue-soft)':'')+'">'+
+          '<div><div style="font-weight:600;color:var(--ink)">'+ (p.name||"Care") +
+          (p.featured?' <span style="font-size:.7rem;color:var(--brand);font-weight:700">· POPULAR</span>':'') +
+          '</div><div style="font-size:.82rem;color:var(--muted)">$'+price+'/month</div></div>'+
+          '<button class="btn '+(p.featured?"btn-primary":"btn-ghost")+'" data-plan="'+i+'">Subscribe</button></div>';
+      }).join("");
+      Array.prototype.forEach.call(host.querySelectorAll("button[data-plan]"),function(b){
+        b.addEventListener("click",function(){
+          careMsg.className="pay-msg"; careMsg.textContent="";
+          var orig=b.textContent; b.disabled=true; b.textContent="Redirecting…";
+          fetch("/api/pay/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan:+b.dataset.plan})})
+            .then(function(r){return r.json();}).then(function(j){
+              if(j.url){window.location.href=j.url;}
+              else{careMsg.className="pay-msg err";careMsg.textContent=j.error||"Something went wrong.";b.disabled=false;b.textContent=orig;}
+            }).catch(function(){careMsg.className="pay-msg err";careMsg.textContent="Network error. Please try again.";b.disabled=false;b.textContent=orig;});
+        });
       });
     }
   });
