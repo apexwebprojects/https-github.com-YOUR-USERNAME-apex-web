@@ -91,6 +91,19 @@
           <div style="color:var(--muted);font-size:.9rem;margin-bottom:1.1rem">Ongoing care for your site, agents &amp; automations — billed monthly, cancel anytime.</div>
           <div class="pay-msg" id="careMsg"></div>
           <div id="careTiers"></div>
+
+          <div id="customCare" style="margin-top:.5rem;border-top:1px dashed var(--line-strong);padding-top:1.1rem">
+            <div style="font-weight:600;color:var(--ink);font-size:.95rem;margin-bottom:.55rem">Or set a custom monthly amount</div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+              <div style="position:relative;flex:1;min-width:170px">
+                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600">$</span>
+                <input id="customAmt" type="number" min="1" step="0.01" inputmode="decimal" placeholder="0.00" style="width:100%;background:var(--panel-2);border:1px solid var(--line-strong);border-radius:8px;padding:.72rem 3.4rem .72rem 1.9rem;color:var(--ink);font-family:var(--font);font-weight:600;font-size:1rem">
+                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted-2);font-size:.8rem">/month</span>
+              </div>
+              <button class="btn btn-ghost" id="customSubBtn">Subscribe</button>
+            </div>
+            <div style="font-size:.76rem;color:var(--muted-2);margin-top:.55rem">For a plan we've agreed on that isn't listed above · billed monthly · cancel anytime.</div>
+          </div>
         </div>
       </div>
 
@@ -170,6 +183,23 @@
             }).catch(function(){careMsg.className="pay-msg err";careMsg.textContent="Network error. Please try again.";b.disabled=false;b.textContent=orig;});
         });
       });
+
+      // custom monthly amount subscription
+      var cBtn=$("#customSubBtn"), cAmt=$("#customAmt");
+      if(cBtn){
+        cBtn.addEventListener("click",function(){
+          careMsg.className="pay-msg"; careMsg.textContent="";
+          var v=parseFloat(cAmt.value);
+          if(!v || v<1){careMsg.className="pay-msg err";careMsg.textContent="Enter a monthly amount of at least $1.";cAmt.focus();return;}
+          if(v>50000){careMsg.className="pay-msg err";careMsg.textContent="Enter an amount under $50,000.";return;}
+          var orig=cBtn.textContent; cBtn.disabled=true; cBtn.textContent="Redirecting…";
+          fetch("/api/pay/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({custom:v})})
+            .then(function(r){return r.json();}).then(function(j){
+              if(j.url){window.location.href=j.url;}
+              else{careMsg.className="pay-msg err";careMsg.textContent=j.error||"Something went wrong.";cBtn.disabled=false;cBtn.textContent=orig;}
+            }).catch(function(){careMsg.className="pay-msg err";careMsg.textContent="Network error. Please try again.";cBtn.disabled=false;cBtn.textContent=orig;});
+        });
+      }
     }
   });
 

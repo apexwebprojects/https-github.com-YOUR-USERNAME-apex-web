@@ -119,7 +119,7 @@
     // chat header
     $("#chatName").textContent = `${b.owner || "Ben"} — ${(b.name || "Apex").split(" ")[0]}`;
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
-    document.title = `${b.name || "Apex Web Development"} | Custom Websites for Local Businesses`;
+    document.title = `${b.name || "Apex Web Development"} | Websites, AI Phone Agents & Automations`;
 
     renderMarquee(c); renderPhotoStrip(c); applyWorkToggle(c);
     initReveal(); initFaq();

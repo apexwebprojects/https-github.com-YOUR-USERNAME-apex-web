@@ -94,7 +94,7 @@ DEFAULT_CONTENT = {
     "business": {
         "name": "Apex Web Development",
         "owner": "Ben Stephan",
-        "tagline": "Websites that make local businesses look like the industry leaders they are.",
+        "tagline": "Custom websites, AI phone agents & automations that make local businesses look like the industry leaders they are.",
         "phone": "587-888-7315",
         "email": "apexwebprojects@gmail.com",
         "website": "www.apexweb.ca",
@@ -103,7 +103,7 @@ DEFAULT_CONTENT = {
     },
     "hero": {
         "eyebrow": "Websites · AI agents · automations · Calgary, AB",
-        "headline": "Handmade websites and AI phone agents for local Calgary businesses.",
+        "headline": "Handmade websites, AI phone agents & automations for local Calgary businesses.",
         "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for cafés, salons, barbershops and lash studios, and for trades like plumbers, electricians and HVAC — across SE Calgary and the surrounding towns. Plus AI phone agents, automations, and custom tech for anything that runs on the web.",
         "ctaPrimary": "See a site I built for a business like yours",
         "ctaSecondary": "Book a quick call",
@@ -113,11 +113,11 @@ DEFAULT_CONTENT = {
     },
     "about": {
         "heading": "Hi, I'm Ben — the developer behind Apex.",
-        "body": "I help local and established businesses replace poor, outdated, or DIY websites with something they're proud to share. No bloated page-builders, no agency runaround — you work directly with the person writing the code. Every site is designed from scratch around your brand, your customers, and the results you actually care about.",
+        "body": "I help local and established businesses upgrade how they run online — custom websites, AI phone agents that answer every call, and automations that handle the busywork. No bloated page-builders, no agency runaround — you work directly with the person writing the code. Everything is built from scratch around your brand, your customers, and the results you actually care about.",
         "points": [
-            "Hand-coded, custom design — never a recycled template",
-            "Built to load fast and rank well on Google",
-            "Mobile-first so it looks flawless on every phone",
+            "Websites, AI phone agents & automations — built end to end by one person",
+            "Hand-coded and custom — never a recycled template",
+            "Fast, mobile-first, and built to rank well on Google",
             "You get a direct line to me, not a support ticket"
         ]
     },
@@ -144,7 +144,7 @@ DEFAULT_CONTENT = {
         {"name": "Care Plus", "price": "149", "period": "/month", "featured": True,
          "blurb": "For businesses that change often and want to stay sharp.",
          "features": ["Everything in Care", "Priority edits (up to 5 / month)", "Monthly refresh & content updates", "Basic SEO check-ins"]},
-        {"name": "Premium Care", "price": "199", "period": "/month", "featured": False,
+        {"name": "Premium Care", "price": "249", "period": "/month", "featured": False,
          "blurb": "Full care for your site, AI agents & automations.",
          "features": ["Everything in Care Plus", "AI agent & automation upkeep", "Monthly analytics report", "Priority phone & text support"]}
     ],
@@ -201,7 +201,7 @@ DEFAULT_PRIVACY = """## Privacy Policy
 _Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Development ("we", "us", "Ben Stephan")._
 
 ### 1. Who we are
-Apex Web Development is a custom web design and development business operated by Ben, based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
+Apex Web Development is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
 
 ### 2. What information we collect
 - **Information you give us.** When you use our contact form, request a quote, or message us through live chat, we collect the name, email, phone number, and any details you choose to provide.
@@ -403,7 +403,8 @@ S_LEAD       = {"id": {"type": int, "required": True, "min": 1}, "handled": {"ty
 S_PW         = {"current": {"type": str, "required": True, "max": 200},
                 "new": {"type": str, "required": True, "min": 8, "max": 200}}
 S_NONE       = {}   # endpoints that take no body — still reject unexpected fields
-S_SUBSCRIBE  = {"plan": {"type": int, "min": 0, "max": 50}}  # which care tier (index)
+S_SUBSCRIBE  = {"plan": {"type": int, "min": 0, "max": 50},        # which care tier (index), OR
+                "custom": {"type": float, "min": 1, "max": 50000}}  # a custom monthly amount
 
 # ---------------------------------------------------------------------------
 # Request handler
@@ -723,25 +724,33 @@ class Handler(BaseHTTPRequestHandler):
                     return self._too_many()
                 if not STRIPE_SECRET_KEY:
                     return self._json({"error": "Online payments aren't set up yet. Please contact us."}, 400)
-                data, err = validate(body, S_SUBSCRIBE)   # {plan: index of the chosen tier}
+                data, err = validate(body, S_SUBSCRIBE)   # {plan: tier index}  OR  {custom: monthly $ amount}
                 if err:
                     return self._json({"error": err}, 400)
-                plans = (json.loads(get_setting(c, "content")).get("carePlans") or [])
-                idx = data.get("plan") or 0
-                if idx < 0 or idx >= len(plans):
-                    return self._json({"error": "That care plan isn't available."}, 400)
-                care = plans[idx]
-                try:
-                    cents = int(round(float(str(care.get("price", "")).replace(",", "")) * 100))
-                except (TypeError, ValueError):
-                    cents = 0
-                if cents < 100:
-                    return self._json({"error": "That care plan price isn't set up yet."}, 400)
+                if data.get("custom") is not None:
+                    # custom monthly amount (agreed with the client)
+                    cents = int(round(float(data["custom"]) * 100))
+                    if cents < 100 or cents > 5000000:
+                        return self._json({"error": "Please enter a monthly amount between $1 and $50,000."}, 400)
+                    plan_name = "Custom Care Plan"
+                else:
+                    plans = (json.loads(get_setting(c, "content")).get("carePlans") or [])
+                    idx = data.get("plan") or 0
+                    if idx < 0 or idx >= len(plans):
+                        return self._json({"error": "That care plan isn't available."}, 400)
+                    care = plans[idx]
+                    try:
+                        cents = int(round(float(str(care.get("price", "")).replace(",", "")) * 100))
+                    except (TypeError, ValueError):
+                        cents = 0
+                    if cents < 100:
+                        return self._json({"error": "That care plan price isn't set up yet."}, 400)
+                    plan_name = care.get("name") or "Care Plan"
                 base = self._base_url()
                 sess = stripe_post("checkout/sessions", {
                     "mode": "subscription",
                     "line_items[0][price_data][currency]": STRIPE_CURRENCY,
-                    "line_items[0][price_data][product_data][name]": "Apex " + (care.get("name") or "Care Plan") + " (monthly)",
+                    "line_items[0][price_data][product_data][name]": "Apex " + plan_name + " (monthly)",
                     "line_items[0][price_data][unit_amount]": str(cents),
                     "line_items[0][price_data][recurring][interval]": "month",
                     "line_items[0][quantity]": "1",
