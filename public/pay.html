@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Make a Payment · Apex Web Development</title>
+<title>Make a Payment · Apex Web Solutions</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FAF6EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316362B'/%3E%3Cpath d='M7 22 L16 10 L25 22' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -106,8 +106,15 @@
           </div>
         </div>
 
+        <div id="inboxSection" style="display:none;border-top:1px solid var(--line);margin-top:1.7rem;padding-top:1.6rem">
+          <div style="font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.15rem;margin-bottom:.25rem">Inbox Organizer</div>
+          <div style="color:var(--muted);font-size:.9rem;margin-bottom:1.1rem">AI keeps your email sorted and flags what needs a reply — billed monthly, cancel anytime.</div>
+          <div class="pay-msg" id="inboxMsg"></div>
+          <div id="inboxTiers"></div>
+        </div>
+
         <div class="pay-terms" style="border-top:1px solid var(--line);margin-top:1.7rem;padding-top:1.2rem;font-size:.78rem;color:var(--muted-2);line-height:1.65">
-          By making a payment you agree to Apex Web Development's <strong style="color:var(--muted)">Service Agreement &amp; Refund Policy</strong>. In short: deposits and completed, approved work are non-refundable; monthly Care Plans are billed in advance, can be cancelled anytime, and are not pro-rated for the current month. A full written agreement is shared and signed before any project begins. Questions? <a href="/#contact" style="color:inherit;text-decoration:underline">Get in touch</a> first.
+          By making a payment you agree to Apex Web Solutions' <strong style="color:var(--muted)">Service Agreement &amp; Refund Policy</strong>. In short: deposits and completed, approved work are non-refundable; monthly Care Plans are billed in advance, can be cancelled anytime, and are not pro-rated for the current month. A full written agreement is shared and signed before any project begins. Questions? <a href="/#contact" style="color:inherit;text-decoration:underline">Get in touch</a> first.
         </div>
       </div>
 
@@ -204,6 +211,36 @@
             }).catch(function(){careMsg.className="pay-msg err";careMsg.textContent="Network error. Please try again.";cBtn.disabled=false;cBtn.textContent=orig;});
         });
       }
+    }
+
+    // Inbox Organizer subscriptions
+    var inbox=(content.inbox||{});
+    var iplans=(inbox.plans||[]);
+    var inboxMsg=$("#inboxMsg");
+    if(inbox.enabled!==false && iplans.length){
+      $("#inboxSection").style.display="block";
+      var ihost=$("#inboxTiers");
+      ihost.innerHTML=iplans.map(function(p,i){
+        var price=String(p.price||"").replace(/[^0-9.,]/g,"");
+        return '<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;'+
+          'border:1px solid var(--line-strong);border-radius:10px;padding:.9rem 1rem;margin-bottom:.7rem'+
+          (p.featured?';border-color:var(--brand);background:var(--blue-soft)':'')+'">'+
+          '<div><div style="font-weight:600;color:var(--ink)">'+ (p.name||"Inbox Organizer") +
+          (p.featured?' <span style="font-size:.7rem;color:var(--brand);font-weight:700">· POPULAR</span>':'') +
+          '</div><div style="font-size:.82rem;color:var(--muted)">$'+price+'/month</div></div>'+
+          '<button class="btn '+(p.featured?"btn-primary":"btn-ghost")+'" data-iplan="'+i+'">Subscribe</button></div>';
+      }).join("");
+      Array.prototype.forEach.call(ihost.querySelectorAll("button[data-iplan]"),function(b){
+        b.addEventListener("click",function(){
+          inboxMsg.className="pay-msg"; inboxMsg.textContent="";
+          var orig=b.textContent; b.disabled=true; b.textContent="Redirecting…";
+          fetch("/api/pay/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"inbox",plan:+b.dataset.iplan})})
+            .then(function(r){return r.json();}).then(function(j){
+              if(j.url){window.location.href=j.url;}
+              else{inboxMsg.className="pay-msg err";inboxMsg.textContent=j.error||"Something went wrong.";b.disabled=false;b.textContent=orig;}
+            }).catch(function(){inboxMsg.className="pay-msg err";inboxMsg.textContent="Network error. Please try again.";b.disabled=false;b.textContent=orig;});
+        });
+      });
     }
   });
 

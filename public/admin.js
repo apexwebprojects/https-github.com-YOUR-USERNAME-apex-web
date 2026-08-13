@@ -1,4 +1,4 @@
-/* Apex Web Development — admin panel */
+/* Apex Web Solutions — admin panel */
 (function () {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);

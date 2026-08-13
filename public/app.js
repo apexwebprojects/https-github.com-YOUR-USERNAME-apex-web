@@ -1,4 +1,4 @@
-/* Apex Web Development — front-end */
+/* Apex Web Solutions — front-end */
 (function () {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
@@ -23,7 +23,7 @@
     $("#logoName").textContent = (b.name || "Apex").split(" ")[0];
     const np = $("#navPhone");
     np.href = telHref(phone); np.querySelector("span").textContent = fmtPhone(phone);
-    $("#footName").textContent = b.name || "Apex Web Development";
+    $("#footName").textContent = b.name || "Apex Web Solutions";
     $("#footTag").textContent = b.tagline || "";
     $("#formPhone").textContent = fmtPhone(phone);
 
@@ -60,6 +60,18 @@
         <p>Keep your site, AI agents and automations running smoothly — monthly, cancel anytime.</p>
       </div>
       <div class="price-grid care-plans">${plans.map(p => carePlanCard(p)).join("")}</div>`;
+
+    // inbox organizer
+    const inbox = c.inbox || {};
+    const inboxSec = document.querySelector("#inbox");
+    if (inboxSec) {
+      if (inbox.enabled === false || !(inbox.plans || []).length) {
+        inboxSec.style.display = "none";
+      } else {
+        inboxSec.style.display = "";
+        $("#inboxWrap").innerHTML = inboxSection(inbox);
+      }
+    }
 
     // about
     const ab = c.about || {};
@@ -114,12 +126,12 @@
     // footer
     const fp = $("#footPhone"); fp.href = telHref(phone); fp.textContent = fmtPhone(phone);
     const fe = $("#footEmail"); fe.href = "mailto:" + (b.email || ""); fe.textContent = b.email || "";
-    $("#footCopy").textContent = `© ${new Date().getFullYear()} ${b.name || "Apex Web Development"}. All rights reserved.`;
+    $("#footCopy").textContent = `© ${new Date().getFullYear()} ${b.name || "Apex Web Solutions"}. All rights reserved.`;
 
     // chat header
     $("#chatName").textContent = `${b.owner || "Ben"} — ${(b.name || "Apex").split(" ")[0]}`;
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
-    document.title = `${b.name || "Apex Web Development"} | Websites, AI Phone Agents & Automations`;
+    document.title = `${b.name || "Apex Web Solutions"} | Websites, AI Phone Agents & Automations`;
 
     renderMarquee(c); renderPhotoStrip(c); applyWorkToggle(c);
     initReveal(); initFaq();
@@ -147,7 +159,7 @@
     if (!g.enabled || !imgs.length) { el.style.display = "none"; el.innerHTML = ""; return; }
     el.style.display = "";
     el.innerHTML = `<div class="wrap"><div class="photo-strip-grid">${imgs.map(src =>
-      `<figure class="ph"><img src="${esc(src)}" alt="Recent work by Apex Web Development" loading="lazy"></figure>`).join("")}</div></div>`;
+      `<figure class="ph"><img src="${esc(src)}" alt="Recent work by Apex Web Solutions" loading="lazy"></figure>`).join("")}</div></div>`;
   }
 
   // scrolling industries ticker — driven by editable content.industries.list
@@ -426,6 +438,44 @@
       <ul>${feats}</ul>
       <a href="/pay" class="btn ${p.featured ? "btn-primary" : "btn-ghost"} btn-block">Subscribe</a>
     </div>`;
+  }
+
+  function inboxSection(x) {
+    const feats = (x.features || []).map(f =>
+      `<li><span class="tick">${CHECK}</span><span>${esc(f)}</span></li>`).join("");
+    const tiers = (x.plans || []).map(p => {
+      const price = String(p.price || "").replace(/[^0-9.,]/g, "");
+      const li = (p.features || []).map(f =>
+        `<li><span class="tick">${CHECK}</span><span>${esc(f)}</span></li>`).join("");
+      return `<div class="ibx-tier${p.featured ? " feat" : ""}">
+        ${p.featured ? '<span class="ibx-pop">Most popular</span>' : ""}
+        <div class="ibx-tname">${esc(p.name)}</div>
+        <div class="ibx-price">$${esc(price)}<span>${esc(p.period || "/month")}</span></div>
+        <div class="ibx-blurb">${esc(p.blurb || "")}</div>
+        <ul>${li}</ul>
+        <a href="/pay#inbox" class="btn ${p.featured ? "btn-primary" : "btn-ghost"} btn-block">Get started</a>
+      </div>`;
+    }).join("");
+    return `
+      <div class="sec-head center reveal">
+        <span class="kicker">${esc(x.kicker || "Inbox Organizer")}</span>
+        <h2>${esc(x.heading || "Your inbox, organized.")}</h2>
+        <p>${esc(x.sub || "")}</p>
+      </div>
+      <div class="ibx-panel reveal">
+        <div class="ibx-copy">
+          <ul class="ibx-feats">${feats}</ul>
+          <a href="/pay#inbox" class="btn btn-lg" style="background:var(--cream);color:var(--evergreen)">See plans →</a>
+        </div>
+        <div class="ibx-mock" aria-hidden="true">
+          <div class="ibx-mh"><i></i><i></i><i></i><b>Today · 6 sorted</b></div>
+          <div class="ibx-digest">☀️ 8:00 AM — texted you: “3 emails need a reply today.”</div>
+          <div class="ibx-row"><span class="ibx-av">RM</span><div class="ibx-rt"><div class="s">Re: quote for back deck</div><div class="p">“Can you start next week?”</div></div><span class="ibx-tag r">Needs reply</span></div>
+          <div class="ibx-row"><span class="ibx-av">JT</span><div class="ibx-rt"><div class="s">New lead — kitchen reno</div><div class="p">via your contact form</div></div><span class="ibx-tag r">Needs reply</span></div>
+          <div class="ibx-row"><span class="ibx-av">📰</span><div class="ibx-rt"><div class="s">Supplier newsletter</div><div class="p">filed away for you</div></div><span class="ibx-tag f">FYI</span></div>
+        </div>
+      </div>
+      <div class="ibx-tiers">${tiers}</div>`;
   }
 
   function folioCard(p, i) {

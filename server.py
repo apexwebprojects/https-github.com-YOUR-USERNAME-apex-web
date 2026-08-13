@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Apex Web Development — self-contained website + backend.
+Apex Web Solutions — self-contained website + backend.
 
 Runs on Python 3 standard library ONLY. No pip installs, no Node.
     python3 server.py            # serves on http://localhost:8080
@@ -92,7 +92,7 @@ os.makedirs(UPLOADS, exist_ok=True)
 # ---------------------------------------------------------------------------
 DEFAULT_CONTENT = {
     "business": {
-        "name": "Apex Web Development",
+        "name": "Apex Web Solutions",
         "owner": "Ben Stephan",
         "tagline": "Custom websites, AI phone agents & automations that make local businesses look like the industry leaders they are.",
         "phone": "587-888-7315",
@@ -123,6 +123,7 @@ DEFAULT_CONTENT = {
     },
     "services": [
         {"icon": "✦", "title": "Custom Websites", "desc": "A unique, hand-crafted site built around your brand — not a template thousands of others already use."},
+        {"icon": "✉", "title": "Email Inbox Organizing", "desc": "An AI inbox organizer that reads every email, files the noise, and flags exactly what needs a reply — with an optional morning text of your must-replies."},
         {"icon": "☎", "title": "AI Voice Agents", "desc": "An AI phone agent that answers calls, books appointments, and takes messages 24/7 — so you never miss a customer."},
         {"icon": "⚡", "title": "AI Automations", "desc": "Connect your tools and automate the busywork — bookings, follow-ups, reminders, invoices — so the little tasks run themselves."},
         {"icon": "◆", "title": "Custom Tech Builds", "desc": "Dashboards, booking systems, internal tools, integrations — if it runs on the web, I can build it for you."},
@@ -148,6 +149,26 @@ DEFAULT_CONTENT = {
          "blurb": "Full care for your site, AI agents & automations.",
          "features": ["Everything in Care Plus", "AI agent & automation upkeep", "Monthly analytics report", "Priority phone & text support"]}
     ],
+    # Inbox Organizer — AI email-inbox service, its own section + monthly plans
+    "inbox": {
+        "enabled": True,
+        "kicker": "New — Inbox Organizer",
+        "heading": "Your inbox, organized before you sit down.",
+        "sub": "Our AI inbox organizer reads every email, files the noise, and surfaces only what actually needs you — labelled by what to do next. Upgrade and you'll get a morning text of your must-replies before your first coffee.",
+        "features": [
+            "Reads and sorts every email automatically",
+            "Flags exactly what needs a reply",
+            "Files newsletters, receipts and noise for you"
+        ],
+        "plans": [
+            {"name": "Organizer", "price": "49.99", "period": "/month", "featured": False,
+             "blurb": "AI keeps your inbox sorted so nothing important slips.",
+             "features": ["Reads & sorts every email", "Flags what needs a reply", "Files newsletters & noise", "Weekly clean-up summary"]},
+            {"name": "Organizer Plus", "price": "59.99", "period": "/month", "featured": True,
+             "blurb": "Everything in Organizer — plus your daily 8am heads-up text.",
+             "features": ["Everything in Organizer", "☀️ 8am text: what needs a reply today", "Priority-sorted urgent leads", "Connects up to 2 inboxes"]}
+        ]
+    },
     "industries": {"list": [
         "Custom Websites", "Lash & Brow Studios", "Cafés", "Barbershops", "Salons", "Nail Studios",
         "Pet Groomers", "Plumbers", "Electricians", "HVAC", "Contractors", "Restaurants", "Clinics",
@@ -198,10 +219,10 @@ DEFAULT_CONTENT = {
 
 DEFAULT_PRIVACY = """## Privacy Policy
 
-_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Development ("we", "us", "Ben Stephan")._
+_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Solutions ("we", "us", "Ben Stephan")._
 
 ### 1. Who we are
-Apex Web Development is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
+Apex Web Solutions is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
 
 ### 2. What information we collect
 - **Information you give us.** When you use our contact form, request a quote, or message us through live chat, we collect the name, email, phone number, and any details you choose to provide.
@@ -234,7 +255,7 @@ Our site may link to other websites. We are not responsible for the privacy prac
 We may update this policy from time to time. The latest version will always be posted on this page.
 
 ### 10. Contact us
-Questions about your privacy or this policy? Contact Ben at Apex Web Development using the phone number or email shown on this website.
+Questions about your privacy or this policy? Contact Ben at Apex Web Solutions using the phone number or email shown on this website.
 """
 
 # ---------------------------------------------------------------------------
@@ -403,8 +424,9 @@ S_LEAD       = {"id": {"type": int, "required": True, "min": 1}, "handled": {"ty
 S_PW         = {"current": {"type": str, "required": True, "max": 200},
                 "new": {"type": str, "required": True, "min": 8, "max": 200}}
 S_NONE       = {}   # endpoints that take no body — still reject unexpected fields
-S_SUBSCRIBE  = {"plan": {"type": int, "min": 0, "max": 50},        # which care tier (index), OR
-                "custom": {"type": float, "min": 1, "max": 50000}}  # a custom monthly amount
+S_SUBSCRIBE  = {"plan": {"type": int, "min": 0, "max": 50},        # which tier (index), OR
+                "custom": {"type": float, "min": 1, "max": 50000}, # a custom monthly amount
+                "kind": {"type": str, "max": 20}}                  # "care" (default) or "inbox"
 
 # ---------------------------------------------------------------------------
 # Request handler
@@ -702,7 +724,7 @@ class Handler(BaseHTTPRequestHandler):
                 cents = int(round(data["amount"] * 100))
                 if cents < 100 or cents > 5000000:   # defense-in-depth (schema already bounds it)
                     return self._json({"error": "Please enter an amount between $1 and $50,000."}, 400)
-                desc = data.get("description") or "Apex Web Development — project payment"
+                desc = data.get("description") or "Apex Web Solutions — project payment"
                 base = self._base_url()
                 sess = stripe_post("checkout/sessions", {
                     "mode": "payment",
@@ -734,18 +756,25 @@ class Handler(BaseHTTPRequestHandler):
                         return self._json({"error": "Please enter a monthly amount between $1 and $50,000."}, 400)
                     plan_name = "Custom Care Plan"
                 else:
-                    plans = (json.loads(get_setting(c, "content")).get("carePlans") or [])
+                    kind = (data.get("kind") or "care").lower()
+                    content = json.loads(get_setting(c, "content"))
+                    if kind == "inbox":
+                        plans = ((content.get("inbox") or {}).get("plans") or [])
+                        label, fallback = "Inbox Organizer", "Inbox Organizer"
+                    else:
+                        plans = (content.get("carePlans") or [])
+                        label, fallback = "care plan", "Care Plan"
                     idx = data.get("plan") or 0
                     if idx < 0 or idx >= len(plans):
-                        return self._json({"error": "That care plan isn't available."}, 400)
-                    care = plans[idx]
+                        return self._json({"error": "That " + label + " isn't available."}, 400)
+                    tier = plans[idx]
                     try:
-                        cents = int(round(float(str(care.get("price", "")).replace(",", "")) * 100))
+                        cents = int(round(float(str(tier.get("price", "")).replace(",", "")) * 100))
                     except (TypeError, ValueError):
                         cents = 0
                     if cents < 100:
-                        return self._json({"error": "That care plan price isn't set up yet."}, 400)
-                    plan_name = care.get("name") or "Care Plan"
+                        return self._json({"error": "That " + label + " price isn't set up yet."}, 400)
+                    plan_name = tier.get("name") or fallback
                 base = self._base_url()
                 sess = stripe_post("checkout/sessions", {
                     "mode": "subscription",
@@ -879,7 +908,7 @@ def main():
     init_db()
     _startup_checks()
     httpd = ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
-    print("\n  ✦ Apex Web Development is running")
+    print("\n  ✦ Apex Web Solutions is running")
     print(f"    Site   →  http://localhost:{PORT}")
     print(f"    Admin  →  http://localhost:{PORT}/admin   (default password: changeme123)")
     print("    Press Ctrl+C to stop.\n")
