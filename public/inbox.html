@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Inbox Organizer — your email, sorted automatically</title>
+<meta name="description" content="The Apex Inbox Organizer is an AI that organizes the Gmail or Outlook you already use — reading, sorting and triaging every email, filing the noise, and surfacing only what needs a reply.">
+<meta name="theme-color" content="#FAF6EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316362B'/%3E%3Cpath d='M7 22 L16 10 L25 22' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=18">
+<style>
+  .io-wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  section.io{padding:5rem 0;position:relative}
+  .io-kick{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);font-weight:600;margin-bottom:1rem;display:inline-flex;align-items:center;gap:.55rem}
+  .io-kick::before{content:"";width:26px;height:1px;background:var(--brand)}
+  .io h2{font-family:var(--display);font-weight:650;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.03;letter-spacing:-.02em;color:var(--ink);max-width:20ch}
+  .io h2.center{margin-inline:auto;text-align:center}
+  .io .lead{color:var(--muted);font-size:1.1rem;line-height:1.6;max-width:56ch;margin-top:1rem}
+  .io .lead.center{margin-inline:auto;text-align:center}
+  /* nav */
+  .io-nav{position:sticky;top:0;z-index:40;background:rgba(250,246,238,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .io-nav .in{max-width:1120px;margin:0 auto;padding:.85rem 24px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .io-brand{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.12rem}
+  .io-brand .m{width:30px;height:30px;border-radius:8px;background:var(--evergreen);display:grid;place-items:center}
+  .io-brand .m svg{width:17px;height:17px}
+  .io-nav .links{display:flex;gap:1.5rem;align-items:center}
+  .io-nav .links a{color:var(--muted);font-size:.92rem}
+  .io-nav .links a:hover{color:var(--ink)}
+  @media(max-width:860px){.io-nav .links a:not(.io-navcta){display:none}}
+  /* hero */
+  .io-hero{padding:4.2rem 0 4.5rem;overflow:hidden}
+  .io-hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
+  .io-hero h1{font-family:var(--display);font-weight:650;font-size:clamp(2.5rem,5.4vw,4rem);line-height:1;letter-spacing:-.025em;color:var(--ink)}
+  .io-hero h1 em{font-style:italic;color:var(--forest)}
+  .io-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--blue-soft);color:var(--forest);font-weight:600;font-size:.82rem;padding:.4rem .8rem;border-radius:100px;margin-bottom:1.4rem}
+  .io-badge .d{width:8px;height:8px;border-radius:50%;background:var(--sprout);box-shadow:0 0 0 4px rgba(127,176,105,.25)}
+  .io-hero .sub{color:var(--muted);font-size:1.15rem;line-height:1.6;margin:1.4rem 0 1.9rem;max-width:46ch}
+  .io-hero .sub .q{color:var(--muted-2);font-style:italic}
+  .io-cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
+  .io-mini{display:flex;gap:1.3rem;flex-wrap:wrap;margin-top:1.7rem;color:var(--muted-2);font-size:.85rem}
+  .io-mini span{display:flex;align-items:center;gap:.4rem}
+  /* device mockup */
+  .io-mock{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1rem;box-shadow:0 40px 80px -30px rgba(22,54,43,.4);animation:ioFloat 6s ease-in-out infinite}
+  @keyframes ioFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .io-mock .bar{display:flex;align-items:center;gap:.4rem;padding:.2rem .4rem .8rem;border-bottom:1px solid var(--line)}
+  .io-mock .bar i{width:9px;height:9px;border-radius:50%;background:var(--oat)}
+  .io-mock .bar b{margin-left:.5rem;font-family:var(--display);font-weight:650;font-size:.9rem;color:var(--ink)}
+  .io-mock .bar .cnt{margin-left:auto;font-size:.72rem;color:var(--muted-2)}
+  .io-txt{display:flex;align-items:center;gap:.55rem;margin:.75rem .2rem;padding:.6rem .75rem;border-radius:10px;background:var(--blue-soft);color:var(--forest);font-size:.83rem;font-weight:500}
+  .io-row{display:flex;align-items:center;gap:.7rem;padding:.62rem .3rem;border-bottom:1px solid rgba(30,38,33,.07)}
+  .io-row:last-child{border:none}
+  .io-av{width:30px;height:30px;border-radius:8px;background:var(--oat);display:grid;place-items:center;font-size:.7rem;font-weight:600;color:var(--forest);flex-shrink:0}
+  .io-rt{flex:1;min-width:0}
+  .io-rt .s{font-size:.82rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .io-rt .p{font-size:.72rem;color:var(--muted-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .io-pill{font-size:.6rem;font-weight:700;padding:.22rem .5rem;border-radius:100px;white-space:nowrap;text-transform:uppercase;letter-spacing:.03em}
+  .io-pill.u{background:#f2d7c8;color:#b3552e}.io-pill.r{background:var(--blue-soft);color:var(--forest)}.io-pill.c{background:#efe7d6;color:#9a8c6a}.io-pill.f{background:#eceee9;color:var(--muted-2)}
+  /* comparison */
+  .io-cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.6rem}
+  .io-cmp .col{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.7rem}
+  .io-cmp .col.win{background:linear-gradient(165deg,var(--forest),var(--navy-deep));border-color:var(--forest);color:var(--cream)}
+  .io-cmp h4{font-family:var(--display);font-weight:650;font-size:1.2rem;margin-bottom:.7rem;color:var(--ink)}
+  .io-cmp .col.win h4{color:#fff}
+  .io-cmp p{font-size:.95rem;line-height:1.55;color:var(--muted)}
+  .io-cmp .col.win p{color:#cfd8cd}
+  .io-cmp .flag{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted-2);margin-bottom:.9rem}
+  .io-cmp .col.win .flag{color:var(--sprout)}
+  /* steps */
+  .io-step{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem;align-items:center;margin-top:2.6rem;padding-top:2.6rem;border-top:1px solid var(--line)}
+  .io-step:first-of-type{border-top:none}
+  .io-step.flip .txt{order:2}
+  .io-step .n{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;color:var(--brand);font-weight:600;margin-bottom:.7rem}
+  .io-step h3{font-family:var(--display);font-weight:650;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:.7rem}
+  .io-step p{color:var(--muted);line-height:1.6}
+  .io-list{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.6rem}
+  .io-list li{display:flex;gap:.6rem;align-items:flex-start;font-size:.95rem;color:var(--txt)}
+  .io-list .tk{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--blue-soft);color:var(--brand);display:grid;place-items:center;font-size:.7rem;font-weight:800}
+  .io-card{background:var(--panel);border:1px solid var(--line-strong);border-radius:14px;padding:1.3rem;box-shadow:var(--shadow-sm)}
+  .io-chat{font-family:var(--mono);font-size:.72rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem}
+  .io-msg{background:var(--bg-2);border-radius:10px;padding:.8rem .9rem;font-size:.92rem;color:var(--ink);margin-bottom:.7rem}
+  .io-reply{background:var(--blue-soft);border-radius:10px;padding:.8rem .9rem;font-size:.88rem;color:var(--forest)}
+  .io-reply b{display:block;margin-bottom:.25rem}
+  .io-mini-actions{display:flex;gap:.5rem;margin-top:.7rem}
+  .io-mini-actions .a{font-size:.78rem;font-weight:600;padding:.4rem .8rem;border-radius:7px}
+  .io-mini-actions .go{background:var(--brand);color:#fff}.io-mini-actions .ed{background:var(--bg-2);color:var(--ink)}
+  /* day timeline */
+  .io-time{max-width:720px;margin:2.4rem auto 0}
+  .io-time .t{display:grid;grid-template-columns:96px 1fr;gap:1.1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+  .io-time .clock{font-family:var(--display);font-weight:650;color:var(--brand);font-size:1rem}
+  .io-time .ev{color:var(--txt);line-height:1.55}
+  /* feature grid */
+  .io-feat{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.6rem}
+  .io-feat .f{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.6rem;transition:transform .25s,box-shadow .25s}
+  .io-feat .f:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .io-feat .ic{width:42px;height:42px;border-radius:11px;background:var(--blue-soft);display:grid;place-items:center;font-size:1.3rem;margin-bottom:1rem}
+  .io-feat .f.primary{background:linear-gradient(165deg,var(--forest),var(--navy-deep));border-color:var(--forest)}
+  .io-feat .f.primary h4,.io-feat .f.primary p{color:#fff}.io-feat .f.primary p{color:#cfd8cd}
+  .io-feat .f.primary .ic{background:rgba(127,176,105,.22)}
+  .io-feat h4{font-family:var(--display);font-weight:650;font-size:1.15rem;color:var(--ink);margin-bottom:.5rem}
+  .io-feat p{color:var(--muted);font-size:.93rem;line-height:1.55}
+  .io-feat .tagp{display:inline-block;margin-top:.7rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--sprout);background:rgba(127,176,105,.15);padding:.2rem .55rem;border-radius:100px}
+  /* who */
+  .io-who{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem;margin-top:2.6rem}
+  .io-who .w{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.7rem}
+  .io-who .cat{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--brand);font-weight:600}
+  .io-who h4{font-family:var(--display);font-weight:650;font-size:1.35rem;color:var(--ink);margin:.4rem 0 .6rem}
+  .io-who p{color:var(--muted);font-size:.94rem;line-height:1.55;margin-bottom:1rem}
+  .io-who .ask{font-size:.85rem;color:var(--forest);background:var(--blue-soft);border-radius:8px;padding:.55rem .7rem;margin-bottom:.45rem;font-style:italic}
+  /* pricing */
+  .io-price{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:780px;margin:2.6rem auto 0}
+  .io-tier{background:var(--panel);border:1px solid var(--line-strong);border-radius:18px;padding:2rem;position:relative;display:flex;flex-direction:column}
+  .io-tier.feat{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand),var(--shadow)}
+  .io-pop{position:absolute;top:-12px;left:2rem;background:var(--brand);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.03em;padding:.3rem .75rem;border-radius:100px}
+  .io-tier .tn{font-family:var(--display);font-weight:650;font-size:1.4rem;color:var(--ink)}
+  .io-tier .pr{font-family:var(--display);font-weight:700;font-size:2.7rem;color:var(--ink);margin:.3rem 0}
+  .io-tier .pr span{font-family:var(--font);font-size:1rem;font-weight:500;color:var(--muted)}
+  .io-tier .bl{color:var(--muted);font-size:.95rem;margin-bottom:1.2rem}
+  .io-tier ul{list-style:none;margin:0 0 1.6rem;padding:0;display:grid;gap:.65rem}
+  .io-tier ul li{display:flex;gap:.6rem;align-items:flex-start;font-size:.93rem;color:var(--txt)}
+  .io-tier ul .tk{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--blue-soft);color:var(--brand);display:grid;place-items:center;font-size:.66rem;font-weight:800}
+  .io-tier .btn{margin-top:auto}
+  /* ROI */
+  .io-roi{max-width:520px;margin:2rem auto 0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.7rem}
+  .io-roi h4{font-family:var(--display);font-weight:650;font-size:1.25rem;color:var(--ink);margin-bottom:1rem}
+  .io-roi .r{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.95rem;color:var(--txt)}
+  .io-roi .r b{color:var(--ink)}
+  .io-roi .r.hi b{color:var(--brand)}
+  .io-roi .note{font-size:.85rem;color:var(--muted-2);margin-top:1rem;line-height:1.5}
+  /* faq */
+  .io-faq{max-width:780px;margin:2.4rem auto 0}
+  .io-q{border-bottom:1px solid var(--line)}
+  .io-q button{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:1.15rem 0;font-family:var(--font);font-size:1.05rem;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+  .io-q .pm{color:var(--brand);font-size:1.4rem;flex-shrink:0;transition:transform .25s}
+  .io-q.open .pm{transform:rotate(45deg)}
+  .io-q .a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .io-q .a p{color:var(--muted);line-height:1.6;padding:0 0 1.2rem}
+  /* final cta */
+  .io-final{background:linear-gradient(165deg,var(--forest),var(--navy-deep));border-radius:24px;padding:3.4rem;text-align:center;color:var(--cream);margin:1rem 0 4rem}
+  .io-final h2{color:#fff;margin:0 auto .8rem;max-width:18ch}
+  .io-final p{color:#cfd8cd;max-width:44ch;margin:0 auto 1.6rem;line-height:1.6}
+  .btn.io-light{background:var(--cream);color:var(--evergreen)}
+  /* reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+  .rv.in{opacity:1;transform:none}
+  @media(max-width:860px){
+    .io-hero .grid,.io-step,.io-cmp,.io-feat,.io-who,.io-price{grid-template-columns:1fr}
+    .io-step.flip .txt{order:0}
+    .io-final{padding:2.2rem 1.4rem}
+  }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<div class="io-nav">
+  <div class="in">
+    <a href="/" class="io-brand"><span class="m"><svg viewBox="0 0 32 32" fill="none"><path d="M7 22 L16 10 L25 22" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Apex <span style="color:var(--muted);font-weight:500">· Inbox Organizer</span></a>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#who">Who it's for</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="/pay#inbox" class="btn btn-primary io-navcta" style="padding:.6rem 1.1rem">See plans</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="io-hero">
+  <div class="io-wrap">
+    <div class="grid">
+      <div class="rv in">
+        <span class="io-badge"><span class="d"></span>Works with Gmail &amp; Outlook · AI inbox organizer</span>
+        <h1>Your inbox, finally <em>organized</em>.</h1>
+        <p class="sub">The Apex Inbox Organizer is an AI that lives on top of the email you already use. It reads, sorts and triages every message, files the noise, and surfaces only what actually needs a reply — so you stop living in your inbox. <span class="q">(It'll even text you the short list every morning, if you want.)</span></p>
+        <div class="io-cta-row">
+          <a href="/pay#inbox" class="btn btn-primary btn-lg">See plans</a>
+          <a href="/#contact" class="btn btn-ghost btn-lg">Book a 5-minute demo</a>
+        </div>
+        <div class="io-mini">
+          <span>✓ No switching email apps</span>
+          <span>✓ Set up in minutes</span>
+          <span>✓ Cancel anytime</span>
+        </div>
+      </div>
+      <div class="rv in">
+        <div class="io-mock" aria-hidden="true">
+          <div class="bar"><i></i><i></i><i></i><b>Your inbox — sorted</b><span class="cnt">7 need you · 46 handled</span></div>
+          <div class="io-txt">☀️ 8:00 AM — texted you: “7 emails need a reply today.”</div>
+          <div class="io-row"><span class="io-av">PG</span><div class="io-rt"><div class="s">Paul (GC) — reschedule Fri pour</div><div class="p">“Can we push to Monday?”</div></div><span class="io-pill u">Urgent</span></div>
+          <div class="io-row"><span class="io-av">MK</span><div class="io-rt"><div class="s">Maria K. — approved the $14k quote</div><div class="p">Reply to confirm start date</div></div><span class="io-pill r">Reply</span></div>
+          <div class="io-row"><span class="io-av">$</span><div class="io-rt"><div class="s">Invoice #2041 — 6 days overdue</div><div class="p">chase-up queued for you</div></div><span class="io-pill c">Chase</span></div>
+          <div class="io-row"><span class="io-av">📰</span><div class="io-rt"><div class="s">+ 46 more — newsletters &amp; noise</div><div class="p">filed automatically, nothing to do</div></div><span class="io-pill f">Filed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DIFFERENT -->
+<section class="io" style="background:var(--bg-2)">
+  <div class="io-wrap">
+    <div class="rv"><span class="io-kick">Why it's different</span>
+    <h2>Every other email tool tidies the pile. This one does the work.</h2>
+    <p class="lead">Gmail and inbox cleaners still leave the job on your plate. The Apex Inbox Organizer is an agent — you tell it what you want, and it organizes and acts.</p></div>
+    <div class="io-cmp">
+      <div class="col rv"><div class="flag">Gmail &amp; Outlook</div><h4>You do the sorting</h4><p>You build every filter and folder by hand — then babysit them forever. It waits; you dig for what matters.</p></div>
+      <div class="col rv"><div class="flag">Inbox cleaners</div><h4>A neater pile</h4><p>They auto-sort and unclutter — genuinely helpful. But it's still a tidy pile you have to sit down and work through.</p></div>
+      <div class="col win rv"><div class="flag">Apex Inbox Organizer</div><h4>The pile handles itself</h4><p>You just say what you want. It organizes, triages, drafts, briefs and answers — and gets sharper every week.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="io" id="how">
+  <div class="io-wrap">
+    <div class="rv"><span class="io-kick">How it works</span>
+    <h2>Three steps. Then it runs in the background.</h2>
+    <p class="lead">It isn't another app to learn. You connect the inbox you already have, tell it what you want, and it goes to work organizing.</p></div>
+
+    <div class="io-step rv">
+      <div class="txt"><div class="n">STEP 01</div><h3>Connect the inbox you already have</h3>
+        <p>It works on top of Gmail or Outlook through a secure, one-tap sign-in. Nothing moves, nothing gets imported, and your email stays exactly where it lives today.</p>
+        <ul class="io-list"><li><span class="tk">✓</span>No new email address, no migration</li><li><span class="tk">✓</span>Set up in a couple of minutes</li><li><span class="tk">✓</span>Disconnect any time in one click</li></ul>
+      </div>
+      <div class="io-card"><div class="io-chat">connect account</div>
+        <div class="io-row"><span class="io-av">G</span><div class="io-rt"><div class="s">Gmail — you@company.com</div><div class="p">Secure sign-in</div></div><span class="io-pill r">Connected</span></div>
+        <div class="io-row"><span class="io-av">O</span><div class="io-rt"><div class="s">Outlook</div><div class="p">Add another inbox</div></div><span class="io-pill f">+ Add</span></div>
+      </div>
+    </div>
+
+    <div class="io-step flip rv">
+      <div class="txt"><div class="n">STEP 02</div><h3>Tell it what you want — in plain English</h3>
+        <p>No rules to build, no folders to configure. You talk to it the way you'd text an assistant. It understands the request, confirms it, and remembers it going forward.</p>
+        <ul class="io-list"><li><span class="tk">✓</span>“Flag anything about the Westside job”</li><li><span class="tk">✓</span>“Never let a supplier invoice slip past due”</li><li><span class="tk">✓</span>“Mute newsletters until Friday afternoon”</li></ul>
+      </div>
+      <div class="io-card"><div class="io-chat">apex · assistant</div>
+        <div class="io-msg">“Call my phone the second Paul the contractor emails me.”</div>
+        <div class="io-reply"><b>Got it — rule saved ✓</b>I'll ring your mobile the moment an email from Paul (GC) lands. Want me to text you a summary too?</div>
+      </div>
+    </div>
+
+    <div class="io-step rv">
+      <div class="txt"><div class="n">STEP 03</div><h3>It organizes it — you stay in control</h3>
+        <p>It works quietly in the background: sorting, briefing, alerting and drafting. Anything that leaves your inbox — a sent reply, an action — waits for your one-tap approval. It never goes rogue.</p>
+        <ul class="io-list"><li><span class="tk">✓</span>Drafts wait for your yes before sending</li><li><span class="tk">✓</span>Learns your priorities the more you use it</li><li><span class="tk">✓</span>Reaches you where you already are — phone, WhatsApp, email</li></ul>
+      </div>
+      <div class="io-card"><div class="io-chat">draft ready</div>
+        <div class="io-reply"><b>Reply drafted for Maria K. · needs your yes</b>“Hi Maria — great news, thanks for approving. I'll get the crew scheduled for the week of the 14th and send a firm start date by Friday…”</div>
+        <div class="io-mini-actions"><span class="a go">Send it</span><span class="a ed">Edit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A DAY -->
+<section class="io" style="background:var(--bg-2)">
+  <div class="io-wrap">
+    <div class="rv" style="text-align:center"><span class="io-kick" style="justify-content:center">A day with the organizer</span>
+    <h2 class="center">What it actually feels like.</h2></div>
+    <div class="io-time">
+      <div class="t rv"><div class="clock">7:55 AM</div><div class="ev">Morning brief hits your phone. 7 emails need you today; the other 46 are already sorted and handled.</div></div>
+      <div class="t rv"><div class="clock">9:12 AM</div><div class="ev">Your phone rings. Paul the GC just emailed about the Friday pour — you catch it before he calls someone else.</div></div>
+      <div class="t rv"><div class="clock">12:30 PM</div><div class="ev">Three replies waiting. It drafted them in your voice over lunch. You tap “send” on all three.</div></div>
+      <div class="t rv"><div class="clock">4:45 PM</div><div class="ev">“Anything slipping?” You ask; it flags an overdue invoice and a quote you forgot to follow up on.</div></div>
+      <div class="t rv"><div class="clock">6:00 PM</div><div class="ev">Inbox at zero — not because you spent the day in it, but because it spent the day working for you.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="io" id="features">
+  <div class="io-wrap">
+    <div class="rv"><span class="io-kick">What it does</span>
+    <h2>One assistant. The whole inbox organized.</h2>
+    <p class="lead">Everything below runs from plain-English requests. Turn on what you need, ignore the rest — it adapts to how you actually work.</p></div>
+    <div class="io-feat">
+      <div class="f primary rv"><div class="ic">🗂️</div><h4>Sorts &amp; organizes everything</h4><p>Reads every incoming email, files the newsletters and noise, and groups what's left by what you need to do next — reply, review, chase, ignore. Your inbox is triaged before you sit down.</p><span class="tagp">The core</span></div>
+      <div class="f rv"><div class="ic">📌</div><h4>Flags what needs a reply</h4><p>Out of the fifty that landed, it surfaces the five that genuinely need you — so you start on what matters, not what shouted loudest.</p></div>
+      <div class="f rv"><div class="ic">✍️</div><h4>Replies drafted in your voice</h4><p>Ready-to-send drafts for the emails piling up — in your tone, with the right context pulled from the thread. You review and tap send. Nothing goes out without your say-so.</p></div>
+      <div class="f rv"><div class="ic">🔔</div><h4>Alerts on the people who matter</h4><p>Name your VIPs — a big client, a GC, your best supplier — and it pings or even calls your phone the instant they email. The messages that cost you money never slip.</p></div>
+      <div class="f rv"><div class="ic">💬</div><h4>Ask your inbox anything</h4><p>“What did the supplier quote for lumber last month?” “Did I ever reply to Henderson?” It reads across your mail and answers in seconds — plus instant dashboards on demand.</p></div>
+      <div class="f rv"><div class="ic">☀️</div><h4>Morning brief — if you want it</h4><p>A daily shortlist of what needs you, by text, WhatsApp or email, at the time you choose. A helpful add-on — the organizing happens with or without it.</p><span class="tagp" style="color:var(--muted-2);background:#eceee9">Optional perk</span></div>
+    </div>
+    <div class="io-card rv" style="margin-top:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem">
+      <div><div class="io-chat">You approve actions</div><p style="color:var(--muted);font-size:.9rem;line-height:1.5">It suggests and drafts; it only sends or changes things when you say yes. No surprises in your sent folder.</p></div>
+      <div><div class="io-chat">Works where you are</div><p style="color:var(--muted);font-size:.9rem;line-height:1.5">Brief by text, alert by call, answer by WhatsApp. It meets you on the channels you already check.</p></div>
+      <div><div class="io-chat">On top of your inbox</div><p style="color:var(--muted);font-size:.9rem;line-height:1.5">It layers over Gmail or Outlook — so if you ever turn it off, your email is exactly as you left it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="io" id="who" style="background:var(--bg-2)">
+  <div class="io-wrap">
+    <div class="rv"><span class="io-kick">Who it's for</span>
+    <h2>Built for people who run on email.</h2>
+    <p class="lead">If your leads, your jobs and your money all come through your inbox, every hour lost in there comes straight out of your day.</p></div>
+    <div class="io-who">
+      <div class="w rv"><div class="cat">Contractors &amp; trades</div><h4>Never miss a job or a change order</h4><p>Quotes, schedule changes, supplier invoices and new leads all land in the same noisy inbox. The organizer makes sure the ones that pay you never get buried.</p>
+        <div class="ask">“Call me the second a new lead comes in from my website.”</div><div class="ask">“Flag every email about the Westside job in one place.”</div><div class="ask">“Warn me before any supplier invoice goes past due.”</div></div>
+      <div class="w rv"><div class="cat">Real estate &amp; mortgage</div><h4>Be first to every lead</h4><p>The fastest reply wins the client. It surfaces new inquiries instantly and drafts the first response before your competition has even opened their inbox.</p>
+        <div class="ask">“Text me immediately when a portal lead emails.”</div><div class="ask">“Draft a first reply to every new buyer inquiry.”</div><div class="ask">“Remind me about anyone I haven't followed up in 3 days.”</div></div>
+      <div class="w rv"><div class="cat">Consultants &amp; agencies</div><h4>Protect billable hours</h4><p>Your inbox is where scope creep and dropped balls live. It keeps client threads tidy, drafts your routine replies, and gives you your focus time back.</p>
+        <div class="ask">“Summarize every client thread that moved this week.”</div><div class="ask">“Draft replies to anything I haven't answered in 2 days.”</div><div class="ask">“Keep [Client] emails at the top until I clear them.”</div></div>
+      <div class="w rv"><div class="cat">Solo sales &amp; founders</div><h4>Stay on top of every deal</h4><p>When you're the whole company, email is the bottleneck. It watches your key accounts, nudges you on follow-ups, and briefs you so nothing important goes cold.</p>
+        <div class="ask">“Alert me the moment anyone at Acme Corp emails.”</div><div class="ask">“Every morning, list deals waiting on my reply.”</div><div class="ask">“Draft a follow-up to leads who've gone quiet.”</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="io" id="pricing">
+  <div class="io-wrap">
+    <div class="rv" style="text-align:center"><span class="io-kick" style="justify-content:center">Pricing</span>
+    <h2 class="center">Two simple plans. Pick what fits.</h2>
+    <p class="lead center">Per inbox, billed monthly. No contract — cancel anytime.</p></div>
+    <div class="io-price">
+      <div class="io-tier rv">
+        <div class="tn">Organizer</div>
+        <div class="pr">$49.99<span>/month</span></div>
+        <div class="bl">AI keeps your inbox sorted so nothing important slips.</div>
+        <ul>
+          <li><span class="tk">✓</span>Reads &amp; sorts every email</li>
+          <li><span class="tk">✓</span>Flags what needs a reply</li>
+          <li><span class="tk">✓</span>Files newsletters &amp; noise</li>
+          <li><span class="tk">✓</span>Weekly clean-up summary</li>
+        </ul>
+        <a href="/pay#inbox" class="btn btn-ghost btn-block">Get started</a>
+      </div>
+      <div class="io-tier feat rv">
+        <span class="io-pop">Most popular</span>
+        <div class="tn">Organizer Plus</div>
+        <div class="pr">$59.99<span>/month</span></div>
+        <div class="bl">Everything in Organizer — plus your daily 8am heads-up text.</div>
+        <ul>
+          <li><span class="tk">✓</span>Everything in Organizer</li>
+          <li><span class="tk">✓</span>☀️ 8am text: what needs a reply today</li>
+          <li><span class="tk">✓</span>Priority-sorted urgent leads &amp; VIP alerts</li>
+          <li><span class="tk">✓</span>Reply drafting in your voice</li>
+          <li><span class="tk">✓</span>Connects up to 2 inboxes</li>
+        </ul>
+        <a href="/pay#inbox" class="btn btn-primary btn-block">Get started</a>
+      </div>
+    </div>
+    <div class="io-roi rv">
+      <h4>Does $49.99 actually make sense?</h4>
+      <div class="r"><span>Time in your inbox / day</span><b>~45 min</b></div>
+      <div class="r"><span>That's per month</span><b>~15 hours</b></div>
+      <div class="r"><span>If your time is worth $50/hr</span><b>$750 / mo</b></div>
+      <div class="r hi"><span>Organizer costs</span><b>$49.99 / mo</b></div>
+      <p class="note">Save even a third of that time and it pays for itself many times over — before counting the lead you didn't miss or the invoice that didn't slip.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="io" id="faq" style="background:var(--bg-2)">
+  <div class="io-wrap">
+    <div class="rv" style="text-align:center"><span class="io-kick" style="justify-content:center">FAQ</span>
+    <h2 class="center">Everything you might be wondering.</h2></div>
+    <div class="io-faq">
+      <div class="io-q rv"><button>How does it connect to my email?<span class="pm">+</span></button><div class="a"><p>Through your provider's own secure sign-in for Gmail or Outlook. You grant access with a couple of taps, and you can revoke it just as easily. It works as a layer on top of your existing account — it doesn't move or replace your inbox.</p></div></div>
+      <div class="io-q rv"><button>Is my email data safe?<span class="pm">+</span></button><div class="a"><p>You stay in control the whole way through: you choose what it watches, you approve any action that leaves your inbox, and you can disconnect in one click at any time. Because it sits on top of your existing account, nothing is migrated off it.</p></div></div>
+      <div class="io-q rv"><button>Will it send or delete things on its own?<span class="pm">+</span></button><div class="a"><p>No. It drafts, organizes, briefs and alerts — but anything that changes or leaves your inbox waits for your yes. It never acts behind your back.</p></div></div>
+      <div class="io-q rv"><button>What if it gets something wrong?<span class="pm">+</span></button><div class="a"><p>Because you approve outgoing actions, a wrong draft is just a draft — you edit or discard it. And it learns from your corrections, so it gets more accurate the more you use it.</p></div></div>
+      <div class="io-q rv"><button>Which email providers work?<span class="pm">+</span></button><div class="a"><p>Gmail and Outlook to start, with more on the way. If you're on something else, tell us and we'll let you know where it is on the roadmap.</p></div></div>
+      <div class="io-q rv"><button>How long does setup take?<span class="pm">+</span></button><div class="a"><p>A few minutes. Connect your inbox, tell it one or two things you'd like handled, and it starts organizing. No IT, no manual.</p></div></div>
+      <div class="io-q rv"><button>How does it reach me — email, text, call?<span class="pm">+</span></button><div class="a"><p>Whatever you prefer. Briefs by text or WhatsApp, urgent alerts by phone call, answers wherever you're chatting. You decide per request.</p></div></div>
+      <div class="io-q rv"><button>Can I cancel whenever I want?<span class="pm">+</span></button><div class="a"><p>Yes — no contract, cancel any time. Turn it off and your inbox is exactly as you left it.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="io" style="padding-top:1rem">
+  <div class="io-wrap">
+    <div class="io-final rv">
+      <h2>Get your inbox off your plate.</h2>
+      <p>See the Apex Inbox Organizer run on a real inbox in five minutes — no slides, no pressure, just watch it work.</p>
+      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <a href="/pay#inbox" class="btn io-light btn-lg">See plans →</a>
+        <a href="/#contact" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,.35);color:#fff">Book a demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.io-q button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.parentElement, a=q.querySelector('.a'), open=q.classList.contains('open');
+      document.querySelectorAll('.io-q').forEach(function(x){x.classList.remove('open');x.querySelector('.a').style.maxHeight=null;});
+      if(!open){q.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+    });
+  });
+  // reveal on scroll
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>

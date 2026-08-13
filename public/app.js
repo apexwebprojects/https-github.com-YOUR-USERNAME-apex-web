@@ -465,7 +465,7 @@
       <div class="ibx-panel reveal">
         <div class="ibx-copy">
           <ul class="ibx-feats">${feats}</ul>
-          <a href="/pay#inbox" class="btn btn-lg" style="background:var(--cream);color:var(--evergreen)">See plans →</a>
+          <a href="/inbox" class="btn btn-lg" style="background:var(--cream);color:var(--evergreen)">Explore the Inbox Organizer →</a>
         </div>
         <div class="ibx-mock" aria-hidden="true">
           <div class="ibx-mh"><i></i><i></i><i></i><b>Today · 6 sorted</b></div>

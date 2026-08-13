@@ -102,9 +102,9 @@ DEFAULT_CONTENT = {
         "hours": "Mon–Fri 9am–6pm MT"
     },
     "hero": {
-        "eyebrow": "Websites · AI agents · automations · Calgary, AB",
-        "headline": "Handmade websites, AI phone agents & automations for local Calgary businesses.",
-        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom work for cafés, salons, barbershops and lash studios, and for trades like plumbers, electricians and HVAC — across SE Calgary and the surrounding towns. Plus AI phone agents, automations, and custom tech for anything that runs on the web.",
+        "eyebrow": "Websites · AI agents · automations · inbox organizing · Calgary, AB",
+        "headline": "Handmade websites, AI phone agents & inbox organizing for local Calgary businesses.",
+        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom websites for cafés, salons, barbershops and trades like plumbers, electricians and HVAC. Plus AI phone agents, automations, and an AI inbox organizer that keeps your email sorted and flags exactly what needs a reply.",
         "ctaPrimary": "See a site I built for a business like yours",
         "ctaSecondary": "Book a quick call",
         "stat1num": "", "stat1label": "",
@@ -537,6 +537,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.serve_file("privacy.html")
         if path == "/pay" or path == "/pay/":
             return self.serve_file("pay.html")
+        if path == "/inbox" or path == "/inbox/":
+            return self.serve_file("inbox.html")
         if path == "/pay/success" or path == "/pay/success/":
             return self.serve_file("pay-success.html")
         if path == "/" or path == "":
