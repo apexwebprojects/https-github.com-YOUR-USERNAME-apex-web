@@ -143,11 +143,30 @@
   .io-final h2{color:#fff;margin:0 auto .8rem;max-width:18ch}
   .io-final p{color:#cfd8cd;max-width:44ch;margin:0 auto 1.6rem;line-height:1.6}
   .btn.io-light{background:var(--cream);color:var(--evergreen)}
+  /* reach out */
+  .reach-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:1.6rem;align-items:start}
+  .reach-card{background:linear-gradient(165deg,var(--forest),var(--navy-deep));color:var(--cream);border-radius:18px;padding:2rem;box-shadow:var(--shadow)}
+  .rc-avatar{width:56px;height:56px;border-radius:14px;background:var(--sprout);color:var(--evergreen);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1rem}
+  .rc-name{font-family:var(--display);font-weight:650;font-size:1.5rem}
+  .rc-title{color:#bcccbf;font-size:.9rem;margin:.2rem 0 1.2rem}
+  .rc-line{display:flex;align-items:center;gap:.7rem;color:var(--cream);font-size:1.02rem;padding:.55rem 0;border-top:1px solid rgba(255,255,255,.12);text-decoration:none}
+  .rc-line span{width:22px;text-align:center}
+  a.rc-line:hover{color:var(--sprout)}
+  .rc-note{margin-top:1.2rem;font-size:.85rem;color:#bcccbf;line-height:1.5}
+  .reach-form{background:var(--panel);border:1px solid var(--line-strong);border-radius:18px;padding:1.8rem}
+  .rf-field{margin-bottom:1rem}
+  .rf-field label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:.35rem}
+  .rf-field input,.rf-field textarea{width:100%;border:1px solid var(--line-strong);border-radius:9px;padding:.7rem .85rem;font-size:1rem;font-family:var(--font);color:var(--ink);background:var(--paper)}
+  .rf-field textarea{min-height:90px;resize:vertical}
+  .rf-field input:focus,.rf-field textarea:focus{outline:none;border-color:var(--brand)}
+  .form-msg{margin-top:.8rem;font-size:.92rem;min-height:1.2em}
+  .form-msg.ok{color:var(--forest);font-weight:600}
+  .form-msg.err{color:#b3552e;font-weight:600}
   /* reveal */
   .rv{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
   .rv.in{opacity:1;transform:none}
   @media(max-width:860px){
-    .io-hero .grid,.io-step,.io-cmp,.io-feat,.io-who,.io-price{grid-template-columns:1fr}
+    .io-hero .grid,.io-step,.io-cmp,.io-feat,.io-who,.io-price,.reach-grid{grid-template-columns:1fr}
     .io-step.flip .txt{order:0}
     .io-final{padding:2.2rem 1.4rem}
   }
@@ -179,7 +198,7 @@
         <p class="sub">The Apex Inbox Organizer is an AI that lives on top of the email you already use. It reads, sorts and triages every message, files the noise, and surfaces only what actually needs a reply — so you stop living in your inbox. <span class="q">(It'll even text you the short list every morning, if you want.)</span></p>
         <div class="io-cta-row">
           <a href="/pay#inbox" class="btn btn-primary btn-lg">See plans</a>
-          <a href="/#contact" class="btn btn-ghost btn-lg">Book a 5-minute demo</a>
+          <a href="#reach" class="btn btn-ghost btn-lg">Book a 5-minute demo</a>
         </div>
         <div class="io-mini">
           <span>✓ No switching email apps</span>
@@ -384,13 +403,65 @@
       <p>See the Apex Inbox Organizer run on a real inbox in five minutes — no slides, no pressure, just watch it work.</p>
       <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
         <a href="/pay#inbox" class="btn io-light btn-lg">See plans →</a>
-        <a href="/#contact" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,.35);color:#fff">Book a demo</a>
+        <a href="#reach" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,.35);color:#fff">Book a demo</a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- REACH OUT -->
+<section class="io" id="reach" style="background:var(--bg-2);padding-bottom:5rem">
+  <div class="io-wrap">
+    <div class="rv" style="text-align:center;margin-bottom:2.2rem">
+      <span class="io-kick" style="justify-content:center">Book your 5-minute demo</span>
+      <h2 class="center">See it run on your own inbox.</h2>
+      <p class="lead center">Leave your name and number and I'll reach out to set up a quick, no-pressure demo — just you, me, and your real inbox. No slides.</p>
+    </div>
+    <div class="reach-grid rv">
+      <div class="reach-card">
+        <div class="rc-avatar">B</div>
+        <div class="rc-name">Ben Stephan</div>
+        <div class="rc-title">Founder &amp; Solutions Developer · Apex Web Solutions</div>
+        <a class="rc-line" href="tel:+15878887315"><span>📞</span> (587) 888-7315</a>
+        <a class="rc-line" href="mailto:ben@apexweb.ca"><span>✉️</span> ben@apexweb.ca</a>
+        <div class="rc-line"><span>📍</span> Calgary, Alberta</div>
+        <div class="rc-note">Call or text me directly — you'll always reach me, not a call centre.</div>
+      </div>
+      <form class="reach-form" id="demoForm">
+        <div class="rf-field"><label for="d-name">Your name *</label><input id="d-name" required placeholder="Jane Smith"></div>
+        <div class="rf-field"><label for="d-phone">Phone</label><input id="d-phone" inputmode="tel" placeholder="(403) 000-0000"></div>
+        <div class="rf-field"><label for="d-email">Email</label><input id="d-email" type="email" placeholder="you@business.com"></div>
+        <div class="rf-field"><label for="d-msg">Anything you'd like me to know? (optional)</label><textarea id="d-msg" placeholder="I run a... and my inbox..."></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Request my demo</button>
+        <div class="form-msg" id="demoMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <script>
+  // reach-out demo form -> /api/contact (shows in Ben's admin inbox)
+  var df=document.getElementById("demoForm");
+  if(df){
+    df.addEventListener("submit",function(e){
+      e.preventDefault();
+      var msg=document.getElementById("demoMsg"); msg.className="form-msg"; msg.textContent="";
+      var name=document.getElementById("d-name").value.trim();
+      if(!name){msg.className="form-msg err";msg.textContent="Please add your name so I know who I'm talking to.";return;}
+      var data={name:name,phone:document.getElementById("d-phone").value.trim(),email:document.getElementById("d-email").value.trim(),
+        message:"[Inbox Organizer demo request] "+document.getElementById("d-msg").value.trim()};
+      var btn=df.querySelector("button[type=submit]"); var orig=btn.textContent; btn.disabled=true; btn.textContent="Sending…";
+      fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)})
+        .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
+        .then(function(res){
+          if(res.ok){msg.className="form-msg ok";msg.textContent="Thanks "+(name.split(" ")[0]||"")+"! You're on my list — I'll reach out very soon to set up your demo.";df.reset();}
+          else{msg.className="form-msg err";msg.textContent=(res.j&&res.j.error)||"Something went wrong — please call or email instead.";}
+          btn.disabled=false; btn.textContent=orig;
+        })
+        .catch(function(){msg.className="form-msg err";msg.textContent="Network error — please call or email me directly.";btn.disabled=false;btn.textContent=orig;});
+    });
+  }
+
   // FAQ accordion
   document.querySelectorAll('.io-q button').forEach(function(b){
     b.addEventListener('click',function(){
