@@ -93,7 +93,7 @@ os.makedirs(UPLOADS, exist_ok=True)
 DEFAULT_CONTENT = {
     "business": {
         "name": "Apex Web Solutions",
-        "owner": "Ben Stephan",
+        "owner": "Ben S.",
         "tagline": "Custom websites, AI phone agents & automations that make local businesses look like the industry leaders they are.",
         "phone": "587-888-7315",
         "email": "apexwebprojects@gmail.com",
@@ -219,7 +219,7 @@ DEFAULT_CONTENT = {
 
 DEFAULT_PRIVACY = """## Privacy Policy
 
-_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Solutions ("we", "us", "Ben Stephan")._
+_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Solutions ("we", "us", "Ben S.")._
 
 ### 1. Who we are
 Apex Web Solutions is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
