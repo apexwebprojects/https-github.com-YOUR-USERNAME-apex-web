@@ -1,5 +1,5 @@
 /* ============================================================
-   Apex Web Solutions — "Precision" design system v5
+   Apex Tech Solutions — "Precision" design system v5
    Antimetal-inspired: clean white canvas, hairline borders,
    monospace micro-labels, numbered sections, quiet motion.
    ============================================================ */
@@ -590,3 +590,7 @@ body{background:var(--paper)}
   .ibx-panel{grid-template-columns:1fr;padding:2rem}
   .ibx-tiers{grid-template-columns:1fr;max-width:420px}
 }
+
+/* --- polish pass (Apex Tech Solutions) --- */
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}

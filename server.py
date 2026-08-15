@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Apex Web Solutions — self-contained website + backend.
+Apex Tech Solutions — self-contained website + backend.
 
 Runs on Python 3 standard library ONLY. No pip installs, no Node.
     python3 server.py            # serves on http://localhost:8080
@@ -92,7 +92,7 @@ os.makedirs(UPLOADS, exist_ok=True)
 # ---------------------------------------------------------------------------
 DEFAULT_CONTENT = {
     "business": {
-        "name": "Apex Web Solutions",
+        "name": "Apex Tech Solutions",
         "owner": "Ben S.",
         "tagline": "Custom websites, AI phone agents & automations that make local businesses look like the industry leaders they are.",
         "phone": "587-888-7315",
@@ -123,12 +123,14 @@ DEFAULT_CONTENT = {
     },
     "services": [
         {"icon": "✦", "title": "Custom Websites", "desc": "A unique, hand-crafted site built around your brand — not a template thousands of others already use."},
+        {"icon": "❖", "title": "Custom Software", "desc": "Complete software built around how your business actually runs — job & project management, scheduling, client portals and live dashboards. We're building a full operations platform for a busy contractor right now."},
         {"icon": "✉", "title": "Email Inbox Organizing", "desc": "An AI inbox organizer that reads every email, files the noise, and flags exactly what needs a reply — with an optional morning text of your must-replies."},
         {"icon": "☎", "title": "AI Voice Agents", "desc": "An AI phone agent that answers calls, books appointments, and takes messages 24/7 — so you never miss a customer."},
+        {"icon": "◈", "title": "AI Chat Assistants", "desc": "A smart AI assistant on your website that answers questions, captures leads, and books jobs 24/7 — so visitors never hit a dead end."},
         {"icon": "⚡", "title": "AI Automations", "desc": "Connect your tools and automate the busywork — bookings, follow-ups, reminders, invoices — so the little tasks run themselves."},
-        {"icon": "◆", "title": "Custom Tech Builds", "desc": "Dashboards, booking systems, internal tools, integrations — if it runs on the web, I can build it for you."},
+        {"icon": "◆", "title": "Custom Tech Builds", "desc": "Dashboards, booking systems, internal tools, integrations — the smaller custom pieces that make your day run smoother."},
         {"icon": "↻", "title": "Redesigns & Rescues", "desc": "Have an outdated or broken site? I rebuild it into something modern, fast, and credible."},
-        {"icon": "⚙", "title": "Care & Maintenance", "desc": "Ongoing hosting, updates, edits, and support for your site, agents, and automations — peace of mind, handled."}
+        {"icon": "⚙", "title": "Care & Maintenance", "desc": "Ongoing hosting, updates, edits, and support for your site, software, agents, and automations — peace of mind, handled."}
     ],
     "pricing": [
         {"name": "Starter", "price": "999", "period": "one-time", "blurb": "Perfect for a clean, professional one-page presence.",
@@ -219,10 +221,10 @@ DEFAULT_CONTENT = {
 
 DEFAULT_PRIVACY = """## Privacy Policy
 
-_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Web Solutions ("we", "us", "Ben S.")._
+_Last updated: this policy applies to www.apexweb.ca and all services provided by Apex Tech Solutions ("we", "us", "Ben S.")._
 
 ### 1. Who we are
-Apex Web Solutions is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
+Apex Tech Solutions is a custom web, AI, and automation studio operated by Ben — building websites, AI phone agents, and automations — based in Calgary, Alberta, Canada. You can reach us any time at the phone number or email listed on this website.
 
 ### 2. What information we collect
 - **Information you give us.** When you use our contact form, request a quote, or message us through live chat, we collect the name, email, phone number, and any details you choose to provide.
@@ -255,7 +257,7 @@ Our site may link to other websites. We are not responsible for the privacy prac
 We may update this policy from time to time. The latest version will always be posted on this page.
 
 ### 10. Contact us
-Questions about your privacy or this policy? Contact Ben at Apex Web Solutions using the phone number or email shown on this website.
+Questions about your privacy or this policy? Contact Ben at Apex Tech Solutions using the phone number or email shown on this website.
 """
 
 # ---------------------------------------------------------------------------
@@ -726,7 +728,7 @@ class Handler(BaseHTTPRequestHandler):
                 cents = int(round(data["amount"] * 100))
                 if cents < 100 or cents > 5000000:   # defense-in-depth (schema already bounds it)
                     return self._json({"error": "Please enter an amount between $1 and $50,000."}, 400)
-                desc = data.get("description") or "Apex Web Solutions — project payment"
+                desc = data.get("description") or "Apex Tech Solutions — project payment"
                 base = self._base_url()
                 sess = stripe_post("checkout/sessions", {
                     "mode": "payment",
@@ -910,7 +912,7 @@ def main():
     init_db()
     _startup_checks()
     httpd = ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
-    print("\n  ✦ Apex Web Solutions is running")
+    print("\n  ✦ Apex Tech Solutions is running")
     print(f"    Site   →  http://localhost:{PORT}")
     print(f"    Admin  →  http://localhost:{PORT}/admin   (default password: changeme123)")
     print("    Press Ctrl+C to stop.\n")

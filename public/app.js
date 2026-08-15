@@ -1,4 +1,4 @@
-/* Apex Web Solutions — front-end */
+/* Apex Tech Solutions — front-end */
 (function () {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
@@ -23,7 +23,7 @@
     $("#logoName").textContent = (b.name || "Apex").split(" ")[0];
     const np = $("#navPhone");
     np.href = telHref(phone); np.querySelector("span").textContent = fmtPhone(phone);
-    $("#footName").textContent = b.name || "Apex Web Solutions";
+    $("#footName").textContent = b.name || "Apex Tech Solutions";
     $("#footTag").textContent = b.tagline || "";
     $("#formPhone").textContent = fmtPhone(phone);
 
@@ -126,12 +126,12 @@
     // footer
     const fp = $("#footPhone"); fp.href = telHref(phone); fp.textContent = fmtPhone(phone);
     const fe = $("#footEmail"); fe.href = "mailto:" + (b.email || ""); fe.textContent = b.email || "";
-    $("#footCopy").textContent = `© ${new Date().getFullYear()} ${b.name || "Apex Web Solutions"}. All rights reserved.`;
+    $("#footCopy").textContent = `© ${new Date().getFullYear()} ${b.name || "Apex Tech Solutions"}. All rights reserved.`;
 
     // chat header
     $("#chatName").textContent = `${b.owner || "Ben"} — ${(b.name || "Apex").split(" ")[0]}`;
     $("#chatAv").textContent = (b.owner || "B").charAt(0).toUpperCase();
-    document.title = `${b.name || "Apex Web Solutions"} | Websites, AI Phone Agents & Automations`;
+    document.title = `${b.name || "Apex Tech Solutions"} | Websites, AI Phone Agents & Automations`;
 
     renderMarquee(c); renderPhotoStrip(c); applyWorkToggle(c);
     initReveal(); initFaq();
@@ -159,7 +159,7 @@
     if (!g.enabled || !imgs.length) { el.style.display = "none"; el.innerHTML = ""; return; }
     el.style.display = "";
     el.innerHTML = `<div class="wrap"><div class="photo-strip-grid">${imgs.map(src =>
-      `<figure class="ph"><img src="${esc(src)}" alt="Recent work by Apex Web Solutions" loading="lazy"></figure>`).join("")}</div></div>`;
+      `<figure class="ph"><img src="${esc(src)}" alt="Recent work by Apex Tech Solutions" loading="lazy"></figure>`).join("")}</div></div>`;
   }
 
   // scrolling industries ticker — driven by editable content.industries.list
