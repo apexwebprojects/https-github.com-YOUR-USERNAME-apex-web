@@ -501,7 +501,7 @@
         <p>${esc(p.description || "")}</p>
         <div class="folio-tags">${tags}</div>
         ${(p.link || p.originalUrl) ? `<div class="folio-cta">
-          ${p.link ? `<a href="${esc(linkHref(p.link))}" target="_blank" rel="noopener noreferrer" class="folio-open">Open ↗</a>` : ""}
+          ${p.link ? `<a href="${esc(linkHref(p.link))}" target="_blank" rel="noopener noreferrer" class="folio-open">Visit the live site ↗</a>` : ""}
           ${p.originalUrl ? `<a href="${esc(linkHref(p.originalUrl))}" target="_blank" rel="noopener noreferrer" class="folio-orig">See the original</a>` : ""}
         </div>` : ""}
       </div></div>`;

@@ -102,9 +102,9 @@ DEFAULT_CONTENT = {
         "hours": "Mon–Fri 9am–6pm MT"
     },
     "hero": {
-        "eyebrow": "Websites · AI agents · automations · inbox organizing · Calgary, AB",
-        "headline": "Handmade websites, AI phone agents & inbox organizing for local Calgary businesses.",
-        "sub": "I build the site first — you see the real thing on your own domain before you pay a cent. Custom websites for cafés, salons, barbershops and trades like plumbers, electricians and HVAC. Plus AI phone agents, automations, and an AI inbox organizer that keeps your email sorted and flags exactly what needs a reply.",
+        "eyebrow": "Custom software · websites · AI agents · automations · Calgary, AB",
+        "headline": "Handmade custom software, websites & AI for local Calgary businesses.",
+        "sub": "I build it first — you see the real thing before you pay a cent. Custom software and hand-coded websites for local businesses and trades, plus AI phone agents, automations, and an AI inbox organizer that keeps your email sorted and flags exactly what needs a reply.",
         "ctaPrimary": "See a site I built for a business like yours",
         "ctaSecondary": "Book a quick call",
         "stat1num": "", "stat1label": "",
@@ -180,18 +180,28 @@ DEFAULT_CONTENT = {
     # until you turn it on and upload photos.
     "photos": {"enabled": False, "photo1": "", "photo2": "", "photo3": ""},
     # Selected Work section — OFF by default (no published projects yet). Turn on in admin.
-    "work": {"enabled": False},
+    "work": {"enabled": True},
     # Testimonials / reviews section — OFF by default. Turn on once you have real reviews.
     "reviews": {"enabled": False},
     "portfolio": [
-        {"title": "Anoop Jose Real Estate", "category": "Real Estate", "style": "Editorial & Luxurious",
-         "description": "Personal-brand site for a Calgary Broker of Record — cinematic hero video, live listings, and a self-serve dashboard for photos and properties.", "image": "", "tags": ["Real Estate", "Listings", "Admin CMS"], "accent": "#C9A25E"},
-        {"title": "Summit Grill & Tap", "category": "Restaurant", "style": "Bold & Appetizing",
-         "description": "A warm, photo-forward site with an immersive menu and reservation flow — built to make people hungry.", "image": "", "tags": ["Restaurant", "Menu", "Bookings"], "accent": "#E8593B"},
-        {"title": "Whitaker Law Group", "category": "Professional Services", "style": "Minimal & Trustworthy",
-         "description": "Clean, calm, and authoritative. Quiet typography and lots of whitespace that signals credibility.", "image": "", "tags": ["Legal", "Corporate", "Minimal"], "accent": "#2F4858"},
-        {"title": "Pulse Fitness Studio", "category": "Health & Fitness", "style": "Vibrant & Energetic",
-         "description": "High-energy gradients, motion, and a class schedule that practically makes you want to work out.", "image": "", "tags": ["Fitness", "Booking", "Bold"], "accent": "#7C3AED"}
+        {"title": "DLK Contracting", "category": "Asphalt paving · Calgary", "style": "Bold / Gold",
+         "description": "A bold black-and-gold site for a Calgary asphalt paving company — services, project gallery and a quote form.",
+         "image": "/work/dlk.jpg", "link": "https://dlkcontractinginc.com", "tags": ["Website", "Quote form", "Gallery"], "accent": "#c79a3b"},
+        {"title": "Craft Drywall", "category": "Drywall repair · Calgary", "style": "Editorial B&W",
+         "description": "A striking black-and-white editorial site with a draggable before/after slider and an affiliate 'Pro Shop', for a 30-year drywall repair specialist.",
+         "image": "/work/craft.jpg", "link": "https://craftdrywall.ca", "tags": ["Website", "Editorial", "Pro Shop"], "accent": "#2b2b2b"},
+        {"title": "Spec Construction", "category": "Concrete cutting & demolition", "style": "Industrial",
+         "description": "A 10-page site with scroll animations, a before/after slider and a validated quote form for a Calgary concrete-cutting & demolition company.",
+         "image": "/work/spec.jpg", "link": "https://specconstruction.ca", "tags": ["Website", "Animation", "Before/after"], "accent": "#e8722c"},
+        {"title": "DJD Renovations", "category": "Decking & renovations", "style": "Premium",
+         "description": "The marketing site for a high-volume Calgary decking contractor — with a full custom operations platform now in build.",
+         "image": "/work/djd.jpg", "link": "https://djdreno.ca", "tags": ["Website", "Custom software"], "accent": "#3f7d54"},
+        {"title": "The Drain Wizards", "category": "Drain cleaning · Calgary", "style": "Dark / Copper",
+         "description": "A sleek black, silver and copper site with a real job-photo gallery for a Calgary drain-cleaning company.",
+         "image": "/work/drainwizards.jpg", "link": "https://thedrainwizards.com", "tags": ["Website", "Gallery"], "accent": "#b87333"},
+        {"title": "Fresh Cleaning YYC", "category": "Window cleaning · Calgary", "style": "Playful / Water",
+         "description": "A bright, water-themed site with a rain-on-glass hero effect and video for a Calgary window-cleaning company.",
+         "image": "/work/fresh.jpg", "link": "https://freshcleaningyyc.com", "tags": ["Website", "Video hero", "Animation"], "accent": "#2b8fd6"}
     ],
     "testimonials": [
         {"name": "Sarah M.", "role": "Owner, Local Bakery", "quote": "Ben took our embarrassing old site and turned it into something we're genuinely proud of. Calls went up within weeks."},
