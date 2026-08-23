@@ -184,9 +184,9 @@ DEFAULT_CONTENT = {
     # Testimonials / reviews section — OFF by default. Turn on once you have real reviews.
     "reviews": {"enabled": False},
     "portfolio": [
-        {"title": "DLK Contracting", "category": "Asphalt paving · Calgary", "style": "Bold / Gold",
-         "description": "A bold black-and-gold site for a Calgary asphalt paving company — services, project gallery and a quote form.",
-         "image": "/work/dlk.jpg", "link": "https://dlkcontractinginc.com", "tags": ["Website", "Quote form", "Gallery"], "accent": "#c79a3b"},
+        {"title": "Calgary Exteriors", "category": "Eavestrough specialist · Calgary", "style": "Dark / Copper",
+         "description": "A dark, mobile-first site with a copper accent and photo galleries for a Calgary eavestrough specialist working since 1987.",
+         "image": "/work/calgaryexteriors.jpg", "link": "https://calgaryexteriors.com", "tags": ["Website", "Gallery", "Mobile-first"], "accent": "#b5713e"},
         {"title": "Craft Drywall", "category": "Drywall repair · Calgary", "style": "Editorial B&W",
          "description": "A striking black-and-white editorial site with a draggable before/after slider and an affiliate 'Pro Shop', for a 30-year drywall repair specialist.",
          "image": "/work/craft.jpg", "link": "https://craftdrywall.ca", "tags": ["Website", "Editorial", "Pro Shop"], "accent": "#2b2b2b"},
@@ -195,13 +195,7 @@ DEFAULT_CONTENT = {
          "image": "/work/spec.jpg", "link": "https://specconstruction.ca", "tags": ["Website", "Animation", "Before/after"], "accent": "#e8722c"},
         {"title": "DJD Renovations", "category": "Decking & renovations", "style": "Premium",
          "description": "The marketing site for a high-volume Calgary decking contractor — with a full custom operations platform now in build.",
-         "image": "/work/djd.jpg", "link": "https://djdreno.ca", "tags": ["Website", "Custom software"], "accent": "#3f7d54"},
-        {"title": "The Drain Wizards", "category": "Drain cleaning · Calgary", "style": "Dark / Copper",
-         "description": "A sleek black, silver and copper site with a real job-photo gallery for a Calgary drain-cleaning company.",
-         "image": "/work/drainwizards.jpg", "link": "https://thedrainwizards.com", "tags": ["Website", "Gallery"], "accent": "#b87333"},
-        {"title": "Fresh Cleaning YYC", "category": "Window cleaning · Calgary", "style": "Playful / Water",
-         "description": "A bright, water-themed site with a rain-on-glass hero effect and video for a Calgary window-cleaning company.",
-         "image": "/work/fresh.jpg", "link": "https://freshcleaningyyc.com", "tags": ["Website", "Video hero", "Animation"], "accent": "#2b8fd6"}
+         "image": "/work/djd.jpg", "link": "https://djdreno.ca", "tags": ["Website", "Custom software"], "accent": "#3f7d54"}
     ],
     "testimonials": [
         {"name": "Sarah M.", "role": "Owner, Local Bakery", "quote": "Ben took our embarrassing old site and turned it into something we're genuinely proud of. Calls went up within weeks."},
