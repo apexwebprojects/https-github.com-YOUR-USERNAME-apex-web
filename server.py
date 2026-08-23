@@ -184,10 +184,10 @@ DEFAULT_CONTENT = {
     # Testimonials / reviews section — OFF by default. Turn on once you have real reviews.
     "reviews": {"enabled": False},
     "portfolio": [
-        {"title": "Calgary Exteriors", "category": "Eavestrough specialist · Calgary", "style": "Dark / Copper",
+        {"title": "Calgary Exteriors", "category": "Eavestrough specialist · Since 1987", "style": "Dark / Copper",
          "description": "A dark, mobile-first site with a copper accent and photo galleries for a Calgary eavestrough specialist working since 1987.",
          "image": "/work/calgaryexteriors.jpg", "link": "https://calgaryexteriors.com", "tags": ["Website", "Gallery", "Mobile-first"], "accent": "#b5713e"},
-        {"title": "Craft Drywall", "category": "Drywall repair · Calgary", "style": "Editorial B&W",
+        {"title": "Craft Drywall", "category": "Drywall repair · Est. 1996", "style": "Editorial B&W",
          "description": "A striking black-and-white editorial site with a draggable before/after slider and an affiliate 'Pro Shop', for a 30-year drywall repair specialist.",
          "image": "/work/craft.jpg", "link": "https://craftdrywall.ca", "tags": ["Website", "Editorial", "Pro Shop"], "accent": "#2b2b2b"},
         {"title": "Spec Construction", "category": "Concrete cutting & demolition", "style": "Industrial",
